@@ -1,0 +1,40 @@
+---
+title: "Capstone"
+author: "Joao de Paula"
+date: '`r format(Sys.time(), "%Y %b  %d  ")`'
+output: html_document:
+  html_document:
+    number_sections: true
+    fig_caption: true
+    toc: true
+    fig_height: 4
+    theme: cosmo
+    highlight: tango
+    code_folding: hide
+---
+
+<center> 
+
+# Costa Rican Household Poverty Level Prediction
+
+
+![LA](https://github.com/jackdepaula/los-angeles-tech-jobs.git/images/la.png){width=100%}
+
+__The Inter-American Development Bank is asking the Kaggle community for help with income qualification for some of the world's poorest families. Are you up for the challenge?__
+
+</center>
+
+---
+
+## Overview 
+
+https://www.iadb.org/en/about-us/overview 
+
+
+__About__
+
+We  transparency, and accountability. 
+
+The 
+
+__Goals__
