@@ -1,5 +1,6 @@
 ---
-title: 'The Tech Industy in Los Angeles'
+title: 'The Tech Industy in Los Angeles City and County'
+author: "Joao de Paula"
 date: '`r format(Sys.time(), "%Y %b  %d  ")`'
 output:
   html_document:
@@ -22,14 +23,31 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 knitr::opts_chunk$set(out.width="80%", fig.height = 3.5, split=FALSE, fig.align = 'center')
 
 ```
+# About
+
+
+<center><img  src="./images/city.jpg" width="460"></center><br>
+<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a> <br>
+
+Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
+
+<center><img  src="./images/county.jpg" width="460"></center><br>
+<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> <br>
+
+Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
+
 <br>
 The tech industry provices high paying jobs. Major contributor to the economy. For example, in 2017, while the media wage for all occupations was $37,700 in the U.S., it was $84,600 for the computer occupations, second only to $102,600 of the management occupations. (Mr. William Yu)
 <br>
 
 <br>
-# Gender Equality
-<center><img  src="https://i.imgur.com/cPe3NkT.png?1" width="460"></center><br>
-A 2015 <a href="https://www.aauw.org/research/solving-the-equation/">survey</a> showed that only 26% of data jobs are held by women [1]. However, lack of feminine perspective creates blind spots such as the <a href="https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting">#googleWalkout</a> [2] and is bad business - says Forbes [3]. In Fig. 1 (above), we use superhero-themes #batman #wonderwoman to visualize the heavy topic of #gender_equality in #datascience. See a bar chart for a more accurate breakdown [4]. Source: survey question Q1 - What is your gender? Sample size =  23,859 respondents 
+
+# WAGES AND PROSPECT
+
+<center><img  src="./images/occupation.jpg" width="460"></center><br>
+
+2017 Employment by major occupational group, 2016 and projected 2026 (Numbers in thousands) [1]. 
+Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
 
 
 # Cohorts
@@ -195,23 +213,12 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 * BRICS to outnumber Western countries by 2020 (Fig. 6)
 * User prevalence moderatedly-correlated with innovation (Fig. 8)
 
-# Interesting Facts
 
-
-<center><img  src="./images/city.jpg" width="460"></center><br>
-<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a> <br>
-
-Los Angeles, CA has a population of 3.98M people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
-
-<center><img  src="./images/county.jpg" width="460"></center><br>
-<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> <br>
-
-Los Angeles County, CA has a population of 10.1M people with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
 
 
 # References
 
-1. [1] https://www.aauw.org/research/solving-the-equation/
+1. [1] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
 2. [2] https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting
 3. [3] https://www.forbes.com/sites/womensmedia/2017/08/03/breaking-down-the-gender-gap-in-data-science/#129d1bb74287
 4. [4] https://www.kaggle.com/paultimothymooney/2018-kaggle-machine-learning-data-science-survey
@@ -266,6 +273,6 @@ plot(J1)
 
 
 
-
+<a href="https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting">#googleWalkout</a> [2] and is bad business - says Forbes [3]. In Fig. 1 (above), we use superhero-themes #batman #wonderwoman to visualize the heavy topic of #gender_equality in #datascience. See a bar chart for a more accurate breakdown [4]. Source: survey question Q1 - What is your gender? Sample size =  23,859 respondents 
 
 
