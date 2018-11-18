@@ -141,55 +141,53 @@ Source - World Bank Population Data 2016, Q11 - Current country of residence [20
 <br>
 <br>
 
-<!-- ```{r fig8, include=TRUE, message=FALSE, echo=FALSE } -->
-<!-- knitr::opts_chunk$set( fig.height = 3.5, split=FALSE, fig.align = 'center') -->
+```{r fig8, include=TRUE, message=FALSE, echo=FALSE }
+knitr::opts_chunk$set( fig.height = 3.5, split=FALSE, fig.align = 'center')
 
-<!--   p <- ggplot(byc,aes(x = respondents.per.10k, y=innovation.index,color=label,label=country)) + -->
-<!--   #geom_point() + -->
-<!--   scale_color_manual(values=c("grey10", "grey45", "red"))+ -->
-<!--   labs(y = "Global Innovation Index", x = "Data Scientists per ten-thousand residents") + -->
-<!--   theme(legend.position = "left") + #axis.text.x  = element_text(angle=30, hjust=1, vjust=0.9)) + -->
-<!--   #ggtitle("Data Scientists* per ten-thousand residents") + -->
-<!--   #geom_text(check_overlap = TRUE)+ -->
-<!--   geom_label(size=3.5)+ -->
-<!--   theme(legend.position="none",panel.grid.major = element_blank(), panel.grid.minor = element_blank(),  -->
-<!--   panel.background = element_blank(), axis.line = element_line(colour = "black", arrow = arrow(length = unit(0.08, "inches"), type = "open")  ))+  -->
-<!--   expand_limits(x = c(0, 0.35)) -->
-<!--   print(p) -->
-<!--   ggsave("fig8.svg", plot=p) -->
+library(readxl)
+library(tidycensus)
+library(tidyverse)
 
-<!-- ``` -->
+
+chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2012"))
+
+# Getting data from the 2012-2016 5-year ACS
+income <- get_acs(geography = "zcta", 
+                  variables = c(medincome = "B19013_001"))
+
+
+cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
+
+# Create the scatter plot with regression line
+
+p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
+  geom_point(colour = "blue", size=4) + 
+  labs(title = "Correlation Between the CHCI and the\n
+       Median House Income of Los Angeles County Zip Codes",
+       x = "City Human Capital Index", y = "Median Household Income") +
+  scale_x_continuous(limits = c(85, 175)) +
+    geom_smooth(colour = "red", method=lm,   # Add linear regression line
+              se=FALSE)    # Don't add shaded confidence region
+p7
+
+
+
+```
+
 <br>
-Fig. 8 Every year, #Insead #Cornel and #Wipo publish <a href="https://www.globalinnovationindex.org/home">Global Innovation Index</a> (#GII) [20]. 
-In 2018, the most innovative country was Switzerland. 
- A Spearman **rank** correlation [23] between GII and user prevalence yields 79%. 
+Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs. 
 
 ** Can we forecast How a Country's innovation will evolve?**
 
 In the chart, some  countries (such as Australia) are below the regression line (not shown here). 
-We call these countries data science **early adopters** - countries with a relative high user prevalence and a low 2018 GII. 
-Given Data Science has currently a low weight in GII, and assuming its economic weight will increase in the comming decades, 
-What countries are better positioned to jump in the innovation ranking?
+We call these countries data science **early adopters** - countries 
 
-Source - Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
+Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
 
-
-Correlation between GII and user prevalence
-<!-- ```{r fig9, include=TRUE, message=FALSE, echo=TRUE} -->
-
-<!-- a <-  cor(byc[,c(3,5)], use="complete.obs", method="kendall")[1,2]  -->
-<!-- b <-  cor(byc[,c(3,5)], use="complete.obs", method="spearman")[1,2] -->
-<!-- c <-  cor(byc[,c(3,5)], use="complete.obs")[1,2] -->
-<!-- d <-  cor(byc[!byc$country=="Singapore",c(3,5)], use="complete.obs")[1,2] -->
-<!-- r <- c(a,b,c,d) -->
-<!-- df2 <- as.data.frame( cbind( c("kendall","spearman","default","ex-Singapore"), round(r, digits=2))) -->
-<!-- colnames(df2) <- c("method","corr") -->
-<!-- print(df2, row.names = FALSE) -->
-<!-- ``` -->
 
 # Visualizations
 
-<center><img  src="./images/tech_10.gif" width="460"></center><br>
+<center><img  src="./images/tech_10.gif"></center><br>
 
 # Conclusions
 
@@ -235,7 +233,7 @@ Los Angeles County, CA has a population of 10.1M people with a median age of 36.
 20. [20] CSV file global innovation in https://www.globalinnovationindex.org/analysis-indicator
 21. [21] World Bank, https://data.worldbank.org/indicator/SP.POP.TOTL
 22. [22] https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
-23. [23] https://www.pinterest.com/pin/281615782925970581/?lp=true
+23. [23] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
 24. 
 
 
