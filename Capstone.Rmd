@@ -20,6 +20,7 @@ output:
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 knitr::opts_chunk$set(out.width="80%", fig.height = 3.5, split=FALSE, fig.align = 'center')
+
 ```
 <br>
 The tech industry provices high paying jobs. Major contributor to the economy. For example, in 2017, while the media wage for all occupations was $37,700 in the U.S., it was $84,600 for the computer occupations, second only to $102,600 of the management occupations. (Mr. William Yu)
@@ -136,7 +137,7 @@ with a small clutter trade-off.
 Source - World Bank Population Data 2016, Q11 - Current country of residence [20]
 
 
-# Innovation (~75% correlation)
+# Correlation Chci & Tech Industries by Zip Code (~75% correlation)
 <br>
 <br>
 
@@ -186,11 +187,28 @@ Correlation between GII and user prevalence
 <!-- print(df2, row.names = FALSE) -->
 <!-- ``` -->
 
+# Visualizations
+
+<center><img  src="./images/tech_10.gif" width="460"></center><br>
+
 # Conclusions
 
 * Gender imbalance continues (Fig. 1)
 * BRICS to outnumber Western countries by 2020 (Fig. 6)
 * User prevalence moderatedly-correlated with innovation (Fig. 8)
+
+# Interesting Facts
+
+
+<center><img  src="./images/city.jpg" width="460"></center><br>
+<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a> <br>
+
+Los Angeles, CA has a population of 3.98M people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
+
+<center><img  src="./images/county.jpg" width="460"></center><br>
+<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> <br>
+
+Los Angeles County, CA has a population of 10.1M people with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
 
 
 # References
@@ -233,24 +251,20 @@ Correlation between GII and user prevalence
 
 
 
-<center><img  src="./images/city.jpg" width="460"></center>
-
-<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a> <br>
-
-__ Los Angeles, CA has a population of 3.98M people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.__
-
-<center><img  src="./images/county.jpg" width="460"></center><br>
-<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> <br>
-
-__ Los Angeles County, CA has a population of 10.1M people with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase..__
 
 
-<!-- ## Motion Chart -->
-<!-- ```{r MotionChartExample, results='asis', tidy=FALSE} -->
-<!-- M <- gvisMotionChart(Fruits, 'Fruit', 'Year', -->
-<!--          options=list(width=400, height=350)) -->
-<!-- plot(M) -->
-<!-- ``` -->
+## Motion Chart
+```{r MotionChartExample, results='asis', tidy=FALSE}
+lacounty_data <- read.csv("./data/lacounty_data.csv")
+
+
+library(googleVis)
+
+J1 = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all_jobs", yvar="tech_jobs",
+                    options=list(width=1500, height=630))
+
+plot(J1)
+```
 
 
 
