@@ -37,12 +37,12 @@ Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 a
 Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
 
 <br>
-The tech industry provices high paying jobs. Major contributor to the economy. For example, in 2017, while the media wage for all occupations was $37,700 in the U.S., it was $84,600 for the computer occupations, second only to $102,600 of the management occupations. (Mr. William Yu)
+LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpanies like Amazon, Tesla, etc ...have headquarters in Los Angeles. It is a vibrant segment of the economy. While California is the 7th economy in the world, Los Angeles is the 24th economy in the world bigger than countries like ....
 <br>
 
 <br>
 
-# WAGES AND PROSPECT
+# Wages and Prospect
 
 <center><img  src="./images/occupation.jpg" width="460"></center><br>
 
@@ -50,7 +50,8 @@ The tech industry provices high paying jobs. Major contributor to the economy. F
 Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
 
 
-# Cohorts
+# Tech Jobs from 2012 to 2017
+
 <center><img src="https://i.imgur.com/zrtSDNf.png?1" width="600" ></center><br>
 What can we learn from our data scientist uncle? Fig. 2 is user distribution by age. We use a two-color scheme [18] to highlight which age-group won most competitions per user*. However, just a few too many age bins can overwhelm any reader. A way to declutter and structure the bins into usable knowledge is to reduce their numbers and group them in a familiar, relatable form. One way is to group the bins by generations. In this case, we used the 
 <a href="https://en.wikipedia.org/wiki/Generations_in_the_workforce">Generations in the workforce</a> 
@@ -218,7 +219,13 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 
 # References
 
+
 1. [1] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+
+
+
+23. [23] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
+
 2. [2] https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting
 3. [3] https://www.forbes.com/sites/womensmedia/2017/08/03/breaking-down-the-gender-gap-in-data-science/#129d1bb74287
 4. [4] https://www.kaggle.com/paultimothymooney/2018-kaggle-machine-learning-data-science-survey
@@ -240,12 +247,14 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 20. [20] CSV file global innovation in https://www.globalinnovationindex.org/analysis-indicator
 21. [21] World Bank, https://data.worldbank.org/indicator/SP.POP.TOTL
 22. [22] https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
-23. [23] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
-24. 
+
+
+
 
 
 # Acknowledgements
-- The chart style is inspired by <a href="https://twitter.com/BW">@BloombergBusiness Week</a>.
+- This project was largely inspired by conversations with Dr. William Yu, UCLA 
+- The chart style is inspire by <a href="https://twitter.com/BW">@BloombergBusiness Week</a>.
 - Fig. 3 and 5 was largely inspired by conversations with Ferran Pujol of McKinsey &Co. Chile. 
 - Fig. 6 inspired by the charts of @ash316 [15]
 - Fig. 1,2,3 inspired by the charts of @paultimothymooney [4]
