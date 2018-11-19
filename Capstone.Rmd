@@ -39,7 +39,7 @@ Los Angeles County, CA has a population of **10.1M people** with a median age of
 <br>
 LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpanies like Amazon, Tesla, etc ...have headquarters in Los Angeles. It is a vibrant segment of the economy. While California is the 7th economy in the world, Los Angeles is the 24th economy in the world bigger than countries like ....
 <br>
-
+Let's take a look at the tech industry employment [1] numbers for the past 13 years.
 <br>
 
 # Wages and Prospect
@@ -50,21 +50,31 @@ LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpani
 Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
 
 
-# Tech Jobs from 2012 to 2017
+# Total Jobs & Grownth from 2012 to 2017 - Dinamic Visualization
 
-<center><img src="https://i.imgur.com/zrtSDNf.png?1" width="600" ></center><br>
-
-<center><img  src="./images/tech_bar.jpg"></center><br>
+<center>**GoogleVis Motion Chart** </center><br>
 
 <center><img  src="./images/tech_line.jpg"></center><br>
 
-<center><img  src="./images/grownth_bar.jpg"></center><br>
+Figure 1 shows the total jobs in the city of Los Angeles and County.
 
 <center><img  src="./images/grownth_line.jpg"></center><br>
 
-What can we learn from our data scientist uncle? Fig. 2 is user distribution by age. We use a two-color scheme [18] to highlight which age-group won most competitions per user*. However, just a few too many age bins can overwhelm any reader. A way to declutter and structure the bins into usable knowledge is to reduce their numbers and group them in a familiar, relatable form. One way is to group the bins by generations. In this case, we used the 
-<a href="https://en.wikipedia.org/wiki/Generations_in_the_workforce">Generations in the workforce</a> 
-(the gen X, Y, Z and the Boomers [5]) and we are interested to see which group is the most productive in terms of competitions and cash prizes per user. Because everyone belongs to a generation this chart can become very personable. What can we learn from the wisdom that each generation offers?
+Figure 2 shows the grownth of all jobs in the city of Los Angeles and County. 
+
+<center><img  src="./images/tech_bar.jpg"></center><br>
+
+Figure 3 shows the total tech jobs in the city of Los Angeles and County.
+
+<center><img  src="./images/grownth_bar.jpg"></center><br>
+
+Figure 4 represents the year over year grownth of Tech jobs in the city of Los Angeles anc County.
+
+<center><img  src="./images/tech_10.gif"></center><br>
+
+
+California is the center of high-tech and innovation in the world.  [18].
+
 
 Generation year brakets and work-ethic attribute
 
@@ -73,149 +83,38 @@ Generation year brakets and work-ethic attribute
 * Gen Y, "Millennials" born 1980 -  2000 "considered the most educated and self-aware generation in employment" [8]
 * Gen Z, born 2000 -
 
-&ast;Source: Own estimate, <a href="https://uaeu.typeform.com/to/aaxMAz">xSurvey</a>. Source - Q2 : What is your age (# years)?
-
-# Inclusion
-<center><img src="https://i.imgur.com/i5HijFH.png" width="600" ></center>
-Fig. 3 tells a #digitaldivide story. How inclusive are we as a community? Should we pat ourselves on our backs? 
-Again, to create knowledge we need to relate the data to the reader in ways they can connect it to other knowledge they have.
-Here, one way is to use the income percentiles (see #onepercent). In US, to belong to the 1% elite, 
-one needs to earn more than $422k per year [10]. About 23 respondents declared that they do. 
-In addition, about 6% declared they belong to the 10% percentile, a very inclusive number because 6% is similar to 10%. 
-The 10% percentile income is about $166k in US [11], so if the sample reflects the distribution found in society 
-it means it is at least somehow inclusive. We add a smiley emoji to reassure the reader that yes, this is good.
-
-However, those numbers are for US household incomes. When we look globally, the 1% percentile thereshold is $32k per year. This puts 60% of the 
-respondents in the top 1%. 60% is very different from 1% so globally this datapoint does not support inclusiveness
-because it does not reflect the global distribution. #Ahamoment. One way to create such moments in the story
-is to A/Bify the story by switching between two points of view. Source - Q9 : What is your current yearly compensation (approximate $USD)?
-
-# ML Champions
-<center><img src="https://i.imgur.com/spbq9Q9.png" width="600" ></center>
-Fig. 4. This chart is an example of less is more. Many times, displaying detailed percentages of 
-usage adds little to the story. In this case Sci-Kit has a 48% share, TF has a 16%, followed by Keras 14%. 
-However, anthropomorphizing the ranking with a podium conveys a memorable affordance: the glory the winner 
-deserves for the great utility this library provided to the community. 
-The podium-template is from a <a href="http://www.amazon.com/Sketch-Thinking-design-ebook/dp/B014BMONTG">#sketchthinking</a> book [12].
-Source - Q20 : Of the choices that you selected in the previous question, which ML library have you used the most? 
-
-
-# Viz Leaders
-<center><img src="https://i.imgur.com/432xvD9.png" width="600"></center>
-Fig. 5. This is a combination of a famous chart template called *Marimekko*, 
-with a symbolic chart called *House of Shiva* [13-14]. 
-Symbolism: The columns, support the visualization efforts of the community. 
-The width of the "columns" expresses how much work/load each column supports. 
-Grey columns on the right represent other less mainstream libs such as: D3, Shiny, bokeh, Leaflet, Lattice.
-
-Source - Q22 : ...which specific data visualization library or tool have you used the most? 
-
-
-# New Users (BRICS)
-<center><img src="https://i.imgur.com/0spLmz4.png" width="600"></center>
-
-
-Fig. 6. Where do new data scientists users come from? 1145 new data sceintist where added in 2018 from more than 100 countries. 
-A typical mistake here is count  grouping by country. 
-There are too many countries for a human to make sense of it! 
-It makes much more sense to group them in economic mega regions: US, Europe, BRICS and the rest of World. 
-(The term "BRIC" was coined in 2001 by then-chairman of Goldman Sachs Asset Management,Jim O'Neill [16].)
-When we do that we see that not only is BRICS the top contributor to growth in  data scientists with 42% of total growth for 2018, but it was also the fastest growing among the big three.
-In 2018, Europe added 302 users that define themselves as data scientist, US: 131, the rest of the world : 231, and BRICS: 481.
-Regarding growth rates, by 2020 BRICS will outnumber Europe and US combined. 
-
-Data source: we <a href="https://www.kaggle.com/harriken/kaggle-journey-2017-2018?scriptVersionId=7123143">forked</a> and modified a snippet the excellent code from [15] and took the top 20 countries whose respondents identified as "data scientist" [17]. EU-6 means the top 6 European countries.
-
-
-# Users by Country (SG leads)
-<br>
-<br>
-
-<!-- ``` -->
-<br>
-Fig. 7 Shows users per capita using World Bank data of 2016 [21].
-We higlight the top country in red and the US (home to the largest community) in black so the reader has a reference point. This chart has a lot going on:
-
-- US mean: 0.14
-- EU6 mean*: 0.09
-- BRICS mean*: 0.03 (5x less than US)
-- Not all BRICS are created equal
-
-**EU gap**
-
-The US-EU gap is about 50%. However, the UK mean closer to the EU6 mean than to the US mean. Therefore, Can we discard language barrier as a explanatory factor for the gap? 
-
-**Assumptions**
-
-The x-label Data Scientists per 10,000 is technically 'respondents per 10,000 residents', which we take it as an estimate of the data scientist prevalence. 
-In addition,  we assume: (i) that the ratio of respondents to data scientists is constant accross borders, (ii) that all respondents are data scientists. 
-The BRICS, and EU6 mean is mean of country means, not weighted by respondents.
-
-
-**Aesthetic considerations** 
-
-This color scheme is called the *red on grey*, it is my favorite scheme for charts. 
-Unlike, other schemes such as purple on grey, it is gender neutral [23]. 
-However, for it to work the red surface must be kept to a minimum, otherwise it comes across as strident. 
-The blue on grey scheme does not have this limitation (See Figs. 1-5). However, 
-the red on grey has one *secret* advantage. Usually, using three colors in a chart will clutter it,
-but because the chromatic distance between red and any shade of grey is so large, we can get away by using black (as a gray 85%) as a third color 
-with a small clutter trade-off.
 
 Source - World Bank Population Data 2016, Q11 - Current country of residence [20]
 
 
-# Correlation Chci & Tech Industries by Zip Code (~75% correlation)
+# Correlation Between the CHCI and the Median House Income of Los Angeles County Zip Codes
 <br>
-<br>
+Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
 
-```{r fig8, include=TRUE, message=FALSE, echo=FALSE }
+```{r fig8, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 knitr::opts_chunk$set( fig.height = 3.5, split=FALSE, fig.align = 'center')
-
 library(readxl)
 library(tidycensus)
 library(tidyverse)
-
-
 chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2012"))
-
 # Getting data from the 2012-2016 5-year ACS
 income <- get_acs(geography = "zcta", 
                   variables = c(medincome = "B19013_001"))
-
-
 cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
-
 # Create the scatter plot with regression line
-
 p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
   geom_point(colour = "blue", size=4) + 
-  labs(title = "Correlation Between the CHCI and the\n
-       Median House Income of Los Angeles County Zip Codes",
+  labs(title = "Fig. 8 ",
        x = "City Human Capital Index", y = "Median Household Income") +
   scale_x_continuous(limits = c(85, 175)) +
     geom_smooth(colour = "red", method=lm,   # Add linear regression line
               se=FALSE)    # Don't add shaded confidence region
 p7
-
-
-
 ```
-
-<br>
-Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs. 
-
-** Can we forecast How a Country's innovation will evolve?**
-
-In the chart, some  countries (such as Australia) are below the regression line (not shown here). 
-We call these countries data science **early adopters** - countries 
 
 Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
 
 
-# Visualizations
-
-<center><img  src="./images/tech_10.gif"></center><br>
 
 # Conclusions
 
@@ -229,11 +128,31 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 # References
 
 
-1. [1] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+1. [1] **Assumptions** Tech industry employment was calculated using the following: (1) Information jobs (NAICS: 51), and (2) Professional, Scientific, & Technical Skills (NAICS: 54). Data source: Quarterly Census of Employment and Wages (QCEW) developed through a cooperative program between the states and the U.S. Bureau of Labor Statistics.-- These data are summarized by Industry Sector (2-digit NAICS).
+2. [2] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
 
-
+Shape Files - https://data.lacity.org/ Los Angeles Open Data
+ACS
+ 
 
 23. [23] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
+
+
+
+# Acknowledgements
+- This project was largely inspired by conversations with Dr. William Yu, UCLA 
+- Dynamic Visualizations were inspire by <a href="https://www.google.com/publicdata/directory">Google Public Data Explorer</a>.
+- Fig. 3 and 5 was largely inspired by conversations with Ferran Pujol of McKinsey &Co. Chile. 
+- Fig. 6 inspired by the charts of @ash316 [15]
+- Fig. 1,2,3 inspired by the charts of @paultimothymooney [4]
+- <a href="https://twitter.com/hadleywickham">Hadley Wickham</a>, for his development of <a href="https://en.wikipedia.org/wiki/Hadley_Wickham">ggplot2
+</a> (Fig 7, 8), the open-source statistical analysis & data visualisation based on Leland Wilkinson's book Grammar of Graphics. 
+
+
+
+
+<a href="https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting">#googleWalkout</a> [2] and is bad business - says Forbes [3]. In Fig. 1 (above), we use superhero-themes #batman #wonderwoman to visualize the heavy topic of #gender_equality in #datascience. See a bar chart for a more accurate breakdown [4]. Source: survey question Q1 - What is your gender? Sample size =  23,859 respondents 
+
 
 2. [2] https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting
 3. [3] https://www.forbes.com/sites/womensmedia/2017/08/03/breaking-down-the-gender-gap-in-data-science/#129d1bb74287
@@ -256,41 +175,4 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 20. [20] CSV file global innovation in https://www.globalinnovationindex.org/analysis-indicator
 21. [21] World Bank, https://data.worldbank.org/indicator/SP.POP.TOTL
 22. [22] https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
-
-
-
-
-
-# Acknowledgements
-- This project was largely inspired by conversations with Dr. William Yu, UCLA 
-- The chart style is inspire by <a href="https://twitter.com/BW">@BloombergBusiness Week</a>.
-- Fig. 3 and 5 was largely inspired by conversations with Ferran Pujol of McKinsey &Co. Chile. 
-- Fig. 6 inspired by the charts of @ash316 [15]
-- Fig. 1,2,3 inspired by the charts of @paultimothymooney [4]
-- <a href="https://twitter.com/hadleywickham">Hadley Wickham</a>, for his development of <a href="https://en.wikipedia.org/wiki/Hadley_Wickham">ggplot2
-</a> (Fig 7, 8), the open-source statistical analysis & data visualisation based on Leland Wilkinson's book Grammar of Graphics. 
-
-
-
-
-
-
-
-## Motion Chart
-```{r MotionChartExample, results='asis', tidy=FALSE}
-lacounty_data <- read.csv("./data/lacounty_data.csv")
-
-
-library(googleVis)
-
-J1 = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all_jobs", yvar="tech_jobs",
-                    options=list(width=1500, height=630))
-
-plot(J1)
-```
-
-
-
-<a href="https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting">#googleWalkout</a> [2] and is bad business - says Forbes [3]. In Fig. 1 (above), we use superhero-themes #batman #wonderwoman to visualize the heavy topic of #gender_equality in #datascience. See a bar chart for a more accurate breakdown [4]. Source: survey question Q1 - What is your gender? Sample size =  23,859 respondents 
-
 
