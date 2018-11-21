@@ -4,20 +4,14 @@
 #
 #####################################################################################################
 
-install.packages("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
-install.packages("scales")
+# install.packages("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+# install.packages("scales")
 # install.packages("stringr")
 # install.packages("Hmisc") 
 # install.packages("forcats") 
 # install.packages("ggthemes") 
 
-remove.packages(c("ggplot2", "data.table"))
-install.packages('Rcpp', dependencies = TRUE)
-install.packages('ggplot2', dependencies = TRUE)
-install.packages('data.table', dependencies = TRUE)
-
 library("tidyverse") # This needs to be executed every time you load R
-
 library("scales") # This needs to be executed every time you load R
 library("stringr") # This needs to be executed every time you load R
 library("Hmisc") # This needs to be executed every time you load R
