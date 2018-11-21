@@ -12,6 +12,7 @@
 
 # Load libraries
 library(googleVis)
+library(readxl)
 
 # Load LA Zip Data
 la_city_zip <- data.frame(read_excel("lacity_zip_chci.xlsx"))

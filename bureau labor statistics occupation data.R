@@ -1,43 +1,29 @@
 #####################################################################################################
 #
-# Bureau of Statistics - https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+# Bureau of Statistics -  Data set: https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
 #
 #####################################################################################################
 
 # Inspired by https://murraylax.org/rtutorials/barplots.html
 
-# install.packages("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+# install.packages("tidyverse") 
 # install.packages("scales")
 # install.packages("stringr")
 # install.packages("Hmisc") 
 # install.packages("forcats") 
 # install.packages("ggthemes") 
 
-library("tidyverse") # This needs to be executed every time you load R
-library("scales") # This needs to be executed every time you load R
-library("stringr") # This needs to be executed every time you load R
-library("Hmisc") # This needs to be executed every time you load R
-library("forcats") # This needs to be executed every time you load R
-library("ggthemes") # This needs to be executed every time you load R
-
-library("ggplot2")
-
-# We use the scales library to customize the scales of our axes.
-# 
-# The stringr package allows us to manipulate strings, which we use to manipulate string labels.
-# 
-# The Hmisc package provides mathematical and statistical functions to use with our plots.
-# 
-# The forcats package provides tools for manipulating categorical variables.
-# 
-# The ggthemes package provides multiple themes, which are combinations of parameters to change a plots look and feel
-
+library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+library("scales") # We use the scales library to customize the scales of our axes.
+library("stringr") # The stringr package allows us to manipulate strings, which we use to manipulate string labels.
+library("Hmisc") # The Hmisc package provides mathematical and statistical functions to use with our plots.
+library("forcats") # The forcats package provides tools for manipulating categorical variables.
+library("ggthemes") # The ggthemes package provides multiple themes, which are combinations of parameters to change a plots look and feel
 library("readxl")
-# Reads URLs directly
-# x <- fread("https://www.bls.gov/emp/tables/emp-by-major-occupational-group.html")
 
 occupation <- read_excel("./data/occupation.xlsx", sheet = "Table 1.1", skip = 2)
-occupation <- occupation[1:23,]
+# occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
+occupation <- occupation[1:10,] ### Keeps only top 10 rows
 colnames(occupation) <- c("industry","code", "2016", "2026", "change2026", "perchange206","median_wages17")
 
 
@@ -48,10 +34,12 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17))
 ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
   stat_summary(fun.data=mean_sdl, geom="bar")
 
-# Fix Labels - Text Wrap
+# Fix Labels
 occupation$industry <- as.factor(occupation$industry)
 levels(occupation$industry)
-levels(occupation$industry) <- str_wrap( levels(occupation$industry), width=12 )
+
+#Text Wrap
+# levels(occupation$industry) <- str_wrap( levels(occupation$industry), width=12 )
 
 ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
   stat_summary(fun.data=mean_sdl, geom="bar")
@@ -103,11 +91,11 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) +
 # it is best practice to keep all of the bars the same color unless a change in color communicates something meaningful
 
 # Color is visual attribute that can be mapped to a variable in the aesthetics layer. Let us first create a dummy variable called manu 
-# that is equal to 1 if the industry variable is equal to "Computer and\nmathematical\noccupations" and 0 otherwise.
+# that is equal to 1 if the industry variable is equal to Computer and mathematical occupations" and 0 otherwise.
 
-occupation$compu <- (occupation$industry == "Computer and\nmathematical\noccupations")
+occupation$compu <- (occupation$industry == "Computer and mathematical occupations")
 
-# The expression (df$industry == "Computer and\nmathematical\noccupations") will compare every observation in the industry variable and return a value Boolean TRUE if the expression is true and FALSE if the value is false.
+# The expression (df$industry == Computer and mathematical occupations") will compare every observation in the industry variable and return a value Boolean TRUE if the expression is true and FALSE if the value is false.
 # Next, we build our plot again from the beginning, this time including another mapping in the aesthetics layer.
 
 ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu))
@@ -131,6 +119,20 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
   coord_flip() + 
   theme(legend.position="none") + 
   scale_fill_manual(values=mycols)
+
+# Add Value Markers
+# tell ggplot to nudge the values left or right sit within or outside the bar and also color the text
+
+mycols <- c("deepskyblue4", "seagreen")
+ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous(labels=dollar) +
+  labs(title="2017 Top 10 Median Wages by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = median_wages17), nudge_y = 2, color = "black")
+
 
 
 

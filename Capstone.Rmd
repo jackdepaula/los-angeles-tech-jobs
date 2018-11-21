@@ -48,6 +48,8 @@ Let's take a look at the tech industry employment [1] numbers for the past 13 ye
 
 2017 Employment by major occupational group, 2016 and projected 2026 (Numbers in thousands) [1]. 
 Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
+<br>
+<center><img  src="./images/wages.png"></center><br>
 
 
 # Total Jobs & Grownth from 2012 to 2017 - Dinamic Visualization
