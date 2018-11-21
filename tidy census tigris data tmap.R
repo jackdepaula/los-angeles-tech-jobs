@@ -47,29 +47,29 @@ library(rgdal)
 ###############################################
 
 
-lacounty_data  <- fread("lacountytech.csv")
+lacounty_data  <- fread("./data/lacountytech.csv")
 
 ## geting the state boundry file from package tigris
-
 # If you have issues with API, download from Tiger's Website
 # download.file("https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html", desfile = 'states.zip")
 # unzip("states.zip")
 # state <- read_shape("cb_2015_us_state_20m.shp", as.sf = TRUE, stringsAsFactors = FALSE)
-# tigris_use_cache = TRUE
-# state<-states(cb=TRUE,class="sf")
-# head(state)
-# summary(state)
-# class(state)
+
+tigris_use_cache = TRUE
+state<-states(cb=TRUE,class="sf")
+head(state)
+summary(state)
+class(state)
 # 
 # ## geting the County boundry file from package tigris
-# tigris_use_cache = TRUE
-# county<-counties(cb=TRUE,class="sf")
-# head(county)
-# summary(county)
-# class(county)
+tigris_use_cache = TRUE
+county<-counties(cb=TRUE,class="sf")
+head(county)
+summary(county)
+class(county)
 
 ## geting the zip boundry file from package tigris
-# zip<-zctas(cb=TRUE,class="sf")
+zip<-zctas(cb=TRUE,class="sf")
 
 ## geting the zip boundry file from package tigris Only from LA
 tigris_use_cache = TRUE
@@ -111,26 +111,10 @@ zip.sf<-left_join(lacounty_data, zip,by=c("GEOID"="ZCTA5CE10"))
 # Merge sf object and data frame
 st_geometry(zip.sf) <- zip.sf$geometry
 
-
-head(zip.sf)
-# dir()
-
 # Subset zip.sf for 2017
-
-names(zip.sf)
-
 zip.sf.17 <- zip.sf %>% filter(year == 2017)
 
-
-names(zip.sf.17)
-
-
-###############################################
-#
 # tmap 2017
-#
-###############################################
-
 my_int_17 <- tm_shape(zip.sf.17) +
   tm_polygons("per", id = "GEOID")
 tmap_mode('view')

@@ -70,22 +70,16 @@ Figure 3 shows the total tech jobs in the city of Los Angeles and County.
 
 Figure 4 represents the year over year grownth of Tech jobs in the city of Los Angeles anc County.
 
+# Density of Tech Jobs by zip code from 2012 to 2017 - Dinamic Visualization
+
 <center><img  src="./images/tech_10.gif"></center><br>
 
 
 California is the center of high-tech and innovation in the world.  [18].
 
+# Interactive Map
 
-Generation year brakets and work-ethic attribute
-
-* The Baby Boomers, born 1946 - 1964 "often branded workaholics" [6]
-* Gen X, born 1967 - 1977 "this generation works to live and carry with them a level of cynicism" [7]
-* Gen Y, "Millennials" born 1980 -  2000 "considered the most educated and self-aware generation in employment" [8]
-* Gen Z, born 2000 -
-
-
-Source - World Bank Population Data 2016, Q11 - Current country of residence [20]
-
+<center><img  src="./images/tmap.png"></center><br>
 
 # Correlation Between the CHCI and the Median House Income of Los Angeles County Zip Codes
 <br>
@@ -176,3 +170,20 @@ ACS
 21. [21] World Bank, https://data.worldbank.org/indicator/SP.POP.TOTL
 22. [22] https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
 
+
+<!-- # Leaflet for R -->
+<!-- # https://rstudio.github.io/leaflet/ -->
+
+<!-- # SF -->
+<!-- # Tidy spatial data in R: using dplyr, tidyr, and ggplot2 with sf -->
+<!-- # http://strimas.com/r/tidy-sf/ -->
+
+Generation year brakets and work-ethic attribute
+
+* The Baby Boomers, born 1946 - 1964 "often branded workaholics" [6]
+* Gen X, born 1967 - 1977 "this generation works to live and carry with them a level of cynicism" [7]
+* Gen Y, "Millennials" born 1980 -  2000 "considered the most educated and self-aware generation in employment" [8]
+* Gen Z, born 2000 -
+
+
+Source - World Bank Population Data 2016, Q11 - Current country of residence [20]
