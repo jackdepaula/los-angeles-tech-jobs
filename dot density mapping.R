@@ -1,3 +1,10 @@
+#####################################################################################################
+# Capstone Project          Instructor: William Yu
+# By Joao de Paula, UCLA Extension Data Science Intensive
+# November. 2018
+#####################################################################################################
+
+
 # Capstone Dot Density Maps using maptools
 
 
@@ -25,7 +32,7 @@ setwd(dirname(current_path ))
 # The Census Bureau is great, though the user interface of the American FactFinder is somewhat onerous. Here are the nineteen steps to download the data:
 #   
 #   Go to factfinder2.census.gov.
-# Find where it says "American Community Survey" and click "get data »".
+# Find where it says "American Community Survey" and click "get data ?".
 # Click the blue "Geographies" button on the left.
 # In the pop-up, select census tract in the "geographic type" menu.
 # Select California in the resulting "state" menu.
