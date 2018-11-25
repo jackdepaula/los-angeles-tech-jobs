@@ -6,21 +6,77 @@
 
 #####################################################################################################
 #
-# Dynamic Visualization of tech jobs Grownth rate city x coutny
+# Dynamic Visualization of tech jobs Los Angeles city & LA coutny - GoogleViz
 #
 #####################################################################################################
 
+# Set working directory in R
+
+#install.packages("rstudioapi") # run this if it's your first time using it to install
+library(rstudioapi) # load it
+current_path <- getActiveDocumentContext()$path # set current path
+setwd(dirname(current_path ))# set working directory
+getwd()
+
 # Load libraries
 library(googleVis)
-library(readxl)
+# library(readxl)
 
-# Load LA Zip Data
-la_city_zip <- data.frame(read_excel("lacity_zip_chci.xlsx"))
+# Load data
+lacounty_data <- read.csv("./data/lacounty_data.csv")
 
-city_zip <- as.data.frame(la_city_zip$zip)
-names(city_zip) <- c("GEOID")
-city_zip <- unique(city_zip)
-citytech <- inner_join(city_zip, lacountytech, by = "GEOID")
+# GoogleViz
+J = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all_jobs", yvar="tech_jobs",
+                    options=list(width=700, height=600))
+
+plot(J)
+
+
+
+
+#####################################################################################################
+#
+# GoogleViz best visualizations
+#
+#####################################################################################################
+
+# Bar Chart - Grownth x Grownth , color = percentage
+# Same - Line Chart
+# TBar Chart - Tech Jobs x Tech Jobs , color = percentage
+
+plot(J1)
+
+
+
+
+#####################################################################################################
+#
+# Load data and summarize year totals for city and county, save as  <- lacounty_data
+#
+#####################################################################################################
+
+# Set working directory in R
+
+#install.packages("rstudioapi") # run this if it's your first time using it to install
+library(rstudioapi) # load it
+current_path <- getActiveDocumentContext()$path # set current path
+setwd(dirname(current_path ))# set working directory
+getwd()
+
+# Load libraries
+
+library(googleVis)
+# library(readxl)
+
+# Load LA zip data
+
+# la_city_zip  <- data.frame(read_excel("./data/lacity_zip_chci.xlsx"))
+# lacountytech <- data.frame(read_excel("./data/lacountytech.xlsx"))
+# 
+# city_zip <- as.data.frame(la_city_zip$zip) # LA city zip codes
+# names(city_zip) <- c("GEOID")
+# city_zip <- unique(city_zip)
+# citytech <- inner_join(city_zip, lacountytech, by = "GEOID")
 
 
 #####################################################################################################
@@ -32,42 +88,42 @@ citytech <- inner_join(city_zip, lacountytech, by = "GEOID")
 
 # totals for city for 2005
 
-# city_tech05 <- lacountytech %>% 
-#   filter(year == 2005) %>% 
+# city_tech05 <- lacountytech %>%
+#   filter(year == 2005) %>%
 #   select("GEOID", "year", "tech", "total")
 
 # totals for County
 
-county_tech_total <- lacountytech %>%
-  group_by(year) %>% 
-  summarize(total_tech_cnty = sum(tech), total_jobs_cnty = sum(total)) %>% 
-  mutate(per_cnty = total_jobs_cnty/total_tech_cnty, cnty_tech_gr = c(NA,exp(diff(log(per_cnty)))-1))
-
-
-# total city 
-
-city_tech_total <- citytech %>%
-  group_by(year) %>%
-  summarize(total_tech_la = sum(tech), total_jobs_la = sum(total)) %>% 
-  mutate(per_la = total_jobs_la/total_tech_la, city_tech_gr = c(NA,exp(diff(log(per_la)))-1))
-
-
-city_tech_total$loc <- "city"
-
-county_tech_total$loc <- "county"
-
-city_tech_total <- city_tech_total[c(6,1,2,3,4,5)]
-county_tech_total <- county_tech_total[c(6,1,2,3,4,5)]
-
-names(city_tech_total) <- c("location", "year", "tech_jobs", "all_jobs", "percentage", "growth")
-names(county_tech_total) <- c("location", "year", "tech_jobs", "all_jobs", "percentage", "growth")
-
-# city_tech_total$GEOID <- "06"
-# county_tech_total$GEOID <- "07"
-
-lacounty_data=rbind(city_tech_total, county_tech_total)
-
-write.csv(lacounty_data,"lacounty_data.csv")
+# county_tech_total <- lacountytech %>%
+#   group_by(year) %>% 
+#   summarize(total_tech_cnty = sum(tech), total_jobs_cnty = sum(total)) %>% 
+#   mutate(per_cnty = total_jobs_cnty/total_tech_cnty, cnty_tech_gr = c(NA,exp(diff(log(per_cnty)))-1))
+# 
+# 
+# # total city 
+# 
+# city_tech_total <- citytech %>%
+#   group_by(year) %>%
+#   summarize(total_tech_la = sum(tech), total_jobs_la = sum(total)) %>% 
+#   mutate(per_la = total_jobs_la/total_tech_la, city_tech_gr = c(NA,exp(diff(log(per_la)))-1))
+# 
+# 
+# city_tech_total$loc <- "city"
+# 
+# county_tech_total$loc <- "county"
+# 
+# city_tech_total <- city_tech_total[c(6,1,2,3,4,5)]
+# county_tech_total <- county_tech_total[c(6,1,2,3,4,5)]
+# 
+# names(city_tech_total) <- c("location", "year", "tech_jobs", "all_jobs", "percentage", "growth")
+# names(county_tech_total) <- c("location", "year", "tech_jobs", "all_jobs", "percentage", "growth")
+# 
+# # city_tech_total$GEOID <- "06"
+# # county_tech_total$GEOID <- "07"
+# 
+# lacounty_data=rbind(city_tech_total, county_tech_total)
+# 
+# write.csv(lacounty_data,"lacounty_data.csv")
 
 
 
@@ -91,27 +147,22 @@ write.csv(lacounty_data,"lacounty_data.csv")
 #                                colorAxis="{colors:[\'#87CEEB\', \'#BE2625\']}",
 #                                width=800, height=600))
 
-J = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all_jobs", yvar="tech_jobs",
-                    options=list(width=700, height=600))
-
-plot(J)
-
-J1 = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all_jobs", yvar="tech_jobs",
-                     options=list(width=700, height=600))
 
 
-#####################################################################################################
-#
-# GoogleViz best visualizations
-#
-#####################################################################################################
 
-# Bar Chart - Grownth x Grownth , color = percentage
-# Same - Line Chart
-# TBar Chart - Tech Jobs x Tech Jobs , color = percentage
-
-plot(J1)
-
+# str(zip_tech_total)
+# str(lacounty_data)
+# 
+# write.csv(zip_tech_total, file = "zip_tech_total.csv")
+# zip_tech_total <- read.csv("zip_tech_total.csv")
+# 
+# str(zip_tech_total)
+# zip_tech_total$X <- NULL
+# zip_tech_total$location <- as.character(zip_tech_total$location)
+# zip_tech_total$year <- as.numeric(zip_tech_total$year)
+# zip_tech_total$tech_jobs <- as.numeric(zip_tech_total$tech_jobs)
+# zip_tech_total$all_jobs <- as.numeric(zip_tech_total$all_jobs)
+# str(zip_tech_total)
 
 # Year Totals - All zip codes + City & County
 
@@ -159,16 +210,3 @@ K = gvisMotionChart(zip_tech_total, idvar="location", timevar="year", xvar = "al
 
 plot(K)
 
-str(zip_tech_total)
-str(lacounty_data)
-
-write.csv(zip_tech_total, file = "zip_tech_total.csv")
-zip_tech_total <- read.csv("zip_tech_total.csv")
-
-str(zip_tech_total)
-zip_tech_total$X <- NULL
-zip_tech_total$location <- as.character(zip_tech_total$location)
-zip_tech_total$year <- as.numeric(zip_tech_total$year)
-zip_tech_total$tech_jobs <- as.numeric(zip_tech_total$tech_jobs)
-zip_tech_total$all_jobs <- as.numeric(zip_tech_total$all_jobs)
-str(zip_tech_total)
