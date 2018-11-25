@@ -32,15 +32,41 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
   library("ggthemes") # provides multiple themes with combinations of parameters to change a plots look and feel
   library("readxl")
 
-# correlation
+# Correlation
 
   # library(readxl)
-  library(tidycensus)
   # library(tidyverse)
+  library(tidycensus) # downloads Census cartographic boundary shapefiles 
+
+      # Before running code like the following from tidycensus,
+      # you need to obtain an API key from the Census and then 
+      # use the function census_api_key() to set it in R.
+      # Request API: https://api.census.gov/data/key_signup.html
+
+      # Once you have your key intall using the following:
+      # census_api_key("777_your_key_777abc", install = TRUE) 
+
+      # First time, reload your environment so you can use the key without restarting R.
+      # readRenviron("~/.Renviron")
+
+      # If you do not have an .Renviron file, the function will create on for you. If you already have
+      # an .Renviron file, the function will append the key to your existing file, while making a backup
+      # of your original file for disaster recovery purposes.
+
+      # You can check your key with:
+      Sys.getenv("CENSUS_API_KEY")
+      
+
+
+```
+
+```{r Load Data, include=FALSE, echo=FALSE}
 
 
 
 ```
+
+
 # City
 <br>
 <center><img  src="./images/city.jpg"></center><br>
@@ -64,12 +90,12 @@ Let's take a look at the tech industry employment [1] numbers for the past 13 ye
 
 ```{r Bureau Labor Statistics, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
-# load data
+# Load data
 occupation <- read_excel("./data/occupation.xlsx", sheet = "Table 1.1", skip = 2)
 occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
 colnames(occupation) <- c("industry","code", "2016", "2026", "change2026", "perchange206","median_wages17")
 
-# rename industries
+# Rename industries
 occupation$industry <- c("Total All Occupations","Management","Business & Financial Operations",
                          "Computer & Mathematical","Architecture & Engineering",
                           "Life, Physical, & Social Science","Community & Social Service","Legal",
@@ -87,7 +113,9 @@ levels(occupation$industry)
 # Reordering Bars by Mean
 levels(occupation$industry)
 
-occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)# The function takes four parameters: 
+occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)
+
+# The function takes four parameters: 
 # (1) the factor variable to order levels,
 # (2) the numerical variable to compute the mean (or other statistic) for each level
 # (3) the summary statistic function we wish to use for ordering - we will pass along mean, but you can potentially
@@ -140,21 +168,18 @@ occupation$industry <- fct_reorder(occupation$industry, occupation$perchange206,
 ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
   stat_summary(fun.y=mean, geom="bar") +
   scale_y_continuous() +
-  labs(title="Employment Percenatage Growth Projection by Industry 2016-2026 ", x="", y="") + 
+  labs(title="% Employment Growth Projection by Industry 2016-2026 ", x="", y="") + 
   coord_flip() +
   theme(legend.position="none") +
   scale_fill_manual(values=mycols) +
   geom_text(aes(label = perchange206), color = "black", hjust=-0.1)
 ```
 
-
-
-<center><img  src="./images/occupation.jpg"></center><br>
-
+<br>
 2017 Employment by major occupational group, 2016 and projected 2026 (Numbers in thousands) [1]. 
 Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
 <br>
-<center><img  src="./images/wages.png"></center><br>
+
 
 
 # Total Jobs & Grownth from 2012 to 2017 - Dinamic Visualization
