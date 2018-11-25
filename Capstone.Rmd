@@ -21,7 +21,6 @@ output:
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 knitr::opts_chunk$set(out.width="80%", fig.height = 3.5, split=FALSE, fig.align = 'center')
-
 ```
 # About
 
