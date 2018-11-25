@@ -12,29 +12,38 @@ output:
     highlight: tango
     code_folding: hide
 ---
-<!-- If a certain option needs to be frequently set to a value in multiple code chunks, you can consider setting it globally in the first code chunk of your document, e.g., -->
-
-<!-- ```{r, setup, include=FALSE} -->
-<!-- knitr::opts_chunk$set(fig.width = 8, collapse = TRUE) -->
-<!-- ``` -->
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
-knitr::opts_chunk$set(out.width="80%", fig.height = 3.5, split=FALSE, fig.align = 'center')
+
+# install.packages("tidyverse") 
+# install.packages("scales")
+# install.packages("stringr")
+# install.packages("Hmisc") 
+# install.packages("forcats") 
+# install.packages("ggthemes") 
+
+library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+library("scales") # We use the scales library to customize the scales of our axes.
+library("stringr") # The stringr package allows us to manipulate strings, which we use to manipulate string labels.
+library("Hmisc") # The Hmisc package provides mathematical and statistical functions to use with our plots.
+library("forcats") # The forcats package provides tools for manipulating categorical variables.
+library("ggthemes") # The ggthemes package provides multiple themes, which are combinations of parameters to change a plots look and feel
+library("readxl")
 ```
-# About
-
-
+# Los Angeles City
+<br>
 <center><img  src="./images/city.jpg"></center><br>
-<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a> <br>
-
+<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a>
+<br>
 Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
 
+# Los Angeles County
+<br>
 <center><img  src="./images/county.jpg"></center><br>
-<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> <br>
-
+<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> 
+<br>
 Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
-
 <br>
 LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpanies like Amazon, Tesla, etc ...have headquarters in Los Angeles. It is a vibrant segment of the economy. While California is the 7th economy in the world, Los Angeles is the 24th economy in the world bigger than countries like ....
 <br>
@@ -42,6 +51,180 @@ Let's take a look at the tech industry employment [1] numbers for the past 13 ye
 <br>
 
 # Wages and Prospect
+
+```{r Bureau Labor Statistics, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+# load data
+occupation <- read_excel("./data/occupation.xlsx", sheet = "Table 1.1", skip = 2)
+occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
+colnames(occupation) <- c("industry","code", "2016", "2026", "change2026", "perchange206","median_wages17")
+
+# rename industries
+occupation$industry <- c("Total All Occupations","Management","Business & Financial Operations",
+                         "Computer & Mathematical","Architecture & Engineering",
+                          "Life, Physical, & Social Science","Community & Social Service","Legal",
+                         "Education, Training & Library","Arts & Recreation",
+                          "Health Practitioners & Technicians","Healthcare Support","Protective Service",
+                         "Food & Serving","Cleaning & Maintenance",
+                          "Personal Care & Service","Sales","Administrative",
+                         "Farming, Fishing, & Forestry","Construction & Extraction",
+                          "Installation, Maintenance, & Repair","Production","Transportation & Material Moving")
+                         
+
+# Creating the Bar Plot
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17))
+
+# Add Statistics and Geometry Layers
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar")
+
+# Fix Labels
+occupation$industry <- as.factor(occupation$industry)
+levels(occupation$industry)
+
+#Text Wrap
+# levels(occupation$industry) <- str_wrap( levels(occupation$industry), width=12 )
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar")
+
+# Labels and Titles
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar") + 
+#   scale_y_continuous(labels=dollar)
+
+# add a descriptive title for plot and we remove the titles for the horizontal 
+# and vertical axes since those will be obvious from the title of the plot and the labels on the scales
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar") + 
+#   scale_y_continuous(labels=dollar) + 
+  labs(title="2017 Median Wages by Industry", x="", y="")
+
+# Reordering Bars by Mean
+
+# It is often useful for visual communication if the bars are ordered by height (mean). This allows the reader to 
+# determine at a glance which industries earn the highest and lowest wages and where a particular industry falls
+# in the distribution.
+
+levels(occupation$industry)
+
+# The function takes four parameters: (1) the factor variable to order levels, (2) the numerical variable to compute the mean (or other statistic) for each level (3) the summary statistic function we wish to use for ordering - we will pass along mean, but you can potentially pass along another function like median or sum, and (4) any parameters that you need to pass to the summary statistic function. In our case, we will pass the parameter, na.rm=TRUE, so that the mean() function ignores missing values. The function returns a new factor variable whose levels are ordered appropriately, but it is otherwise equal to the original factor.
+
+# In the code below, we call fct_reorder() and let the output overwrite our current industry variable in data frame df.
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar") + 
+#   scale_y_continuous(labels=dollar) + 
+#   labs(title="Usual Hourly Earnings by Industry", x="", y="")
+
+
+# Flip Coordinates
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) + 
+#   stat_summary(fun.data=mean_sdl, geom="bar") + 
+#   scale_y_continuous(labels=dollar) + 
+#   labs(title="Usual Hourly Earnings by Industry", x="", y="") +
+#   coord_flip()
+
+# Using Color to Highlight One Category
+
+# it is best practice to keep all of the bars the same color unless a change in color communicates something meaningful
+
+# Color is visual attribute that can be mapped to a variable in the aesthetics layer. Let us first create a dummy variable called manu 
+# that is equal to 1 if the industry variable is equal to Computer and mathematical occupations" and 0 otherwise.
+
+occupation$compu <- (occupation$industry == "Computer & Mathematical")
+
+# The expression (df$industry == Computer and mathematical occupations") will compare every observation in the industry variable and return a value Boolean TRUE if the expression is true and FALSE if the value is false.
+# Next, we build our plot again from the beginning, this time including another mapping in the aesthetics layer.
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu))
+
+# build our plot again from the beginning, this time including another mapping in the aesthetics layer.
+
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+#   stat_summary(fun.y=mean, geom="bar") +
+#   scale_y_continuous(labels=dollar) +
+#   labs(title="2017 Median Wages by Industry", x="", y="") + 
+#   coord_flip() + 
+#   theme(legend.position="none")
+
+# Choose colors - http://sape.inf.usi.ch/quick-reference/ggplot2/colour
+
+# mycols <- c("blue", "red")
+# ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+#   stat_summary(fun.y=mean, geom="bar") +
+#   scale_y_continuous(labels=dollar) +
+#   labs(title="2017 Median Wages by Industry", x="", y="") + 
+#   coord_flip() + 
+#   theme(legend.position="none") + 
+#   scale_fill_manual(values=mycols)
+
+# Add Value Markers
+# tell ggplot to nudge the values left or right sit within or outside the bar and also color the text
+
+mycols <- c("blue", "red")
+ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous(labels=dollar) +
+  labs(title="2017 Top 10 Median Wages by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = median_wages17), nudge_y = 2, color = "black") 
+
+# add geom_hline showing "Total media wages"
+# # Change the "horizontal justification" to be left-justified with hjust 
+
+mycols <- c("blue", "red")
+m <- ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous(labels=dollar) +
+  labs(title="2017 Top 10 Median Wages by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = median_wages17), color = "black", hjust=-0.1) +
+  geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
+
+m
+# remove all occupations
+
+occupation <- occupation[2:23,]
+
+# Number jobs change 2026
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$change2026, mean, na.rm=TRUE)
+ggplot(data=occupation, mapping=aes(x=industry, y=change2026, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous() +
+  labs(title="2016-2026 Employment Jobs Growth Projection by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = change2026), color = "black", hjust=-0.1) 
+  # geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
+
+
+# % growth change 2026
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$perchange206, mean, na.rm=TRUE)
+ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous() +
+  labs(title="2016-2026 Employment Percenatage Growth Projection by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = perchange206), color = "black", hjust=-0.1)
+
+
+```
+
 
 <center><img  src="./images/occupation.jpg"></center><br>
 
@@ -179,12 +362,3 @@ ACS
 <!-- # Tidy spatial data in R: using dplyr, tidyr, and ggplot2 with sf -->
 <!-- # http://strimas.com/r/tidy-sf/ -->
 
-Generation year brakets and work-ethic attribute
-
-* The Baby Boomers, born 1946 - 1964 "often branded workaholics" [6]
-* Gen X, born 1967 - 1977 "this generation works to live and carry with them a level of cynicism" [7]
-* Gen Y, "Millennials" born 1980 -  2000 "considered the most educated and self-aware generation in employment" [8]
-* Gen Z, born 2000 -
-
-
-Source - World Bank Population Data 2016, Q11 - Current country of residence [20]
