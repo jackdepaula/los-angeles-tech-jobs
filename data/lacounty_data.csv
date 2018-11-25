@@ -1,4 +1,4 @@
-,location,year,tech_jobs,all_jobs,percentage_tech_jobs,growth
+time,location,year,tech_jobs,all_jobs,percentage_tech_jobs,growth
 1,City,2005,175166,1608045,9.180120571,NA
 2,City,2006,177861,1488486,8.368816098,-0.088376233
 3,City,2007,183256,1623785,8.860746715,0.058781387

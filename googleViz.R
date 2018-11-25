@@ -58,12 +58,17 @@ print(J, "chart")
 # Size = Tech Jobs
 # Select = ALL + Trails
 
-# Growth x Growth
+# Growth x Time
 # Color = Percentage
 # Size = Tech Jobs
 # Select = ALL + Trails
 
-# Time x Growth
+# Time x Time
+# Color = Percentage
+# Size = Tech Jobs
+# Select = ALL + Trails
+
+# Time x Tech Jobs
 # Color = Percentage
 # Size = Tech Jobs
 # Select = ALL + Trails
