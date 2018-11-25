@@ -14,8 +14,7 @@ library(rstudioapi) # load it
 current_path <- getActiveDocumentContext()$path 
 # The next line sets the working directory
 setwd(dirname(current_path ))
-# You can make sure you are in the right directory
-#print( getwd() )
+
 
 # The steps:
 
@@ -55,7 +54,7 @@ setwd(dirname(current_path ))
 # The above map shows individual census tracts. For faster download and rendering, and to reduce antialiasing artifacts, you can merge tracts of the same color (population density interval) using topomerge. This is so effective at compressing the data that you can reasonably use block groups instead of tracts for greater resolution. For static maps, consider using geo2svg for even faster rendering.
 
 
-
+library(dplyr)
 library(maptools)
 
 #
@@ -64,17 +63,39 @@ library(maptools)
 
 # load the CSV file that represents population estimates for California Census tracts.
 # California population data
+
 acsClasses <- c("character", "character", "character", "numeric", "numeric")
-calipop <- read.csv("data/ACS_12_5YR_B01003_with_ann.csv", stringsAsFactors=FALSE, colClasses=acsClasses)
-calipop.sub <- calipop[,c(2,4)] #only use the second and fourth column, which are the Census tract geographic id and population estimate
+calipop <- read.csv("ACS_12_5YR_B01003_with_ann.csv", stringsAsFactors=FALSE, colClasses=acsClasses)
+calipop.sub <- calipop[,c(2,4)] #only use the second and fourth column, which are the Census tract geogr
+
+calitech <- lacounty_data
+calitech.17 <- filter(calitech, year == "2017") # subset year 2017
+calitech.17 <- calitech.17[,c(2,4)] #only use the second and fourth column, which are the Census tract geographic id and number of tech jobs
+str(calipop.sub)
+str(calitech.17)
+calitech.17$GEOID <- as.character(calitech.17$GEOID)
+calitech.17$tech <- as.numeric(calitech.17$tech)
+names(calitech.17) <- c("geoid2", "tech")
+
+class(calipop.sub)
+class(calitech.17)
+cadata <- full_join(calitech.17, capolys@data, by="GEOID")
+# cadata <- merge(calipop.sub, calitech.17, by = "geoid2")
+# test <- merge(calipop.sub, calitech.17, by.x="geoid2", by.y="GEOID", sort=FALSE)
+
 
 # The shapefile format is a common way to store data for geographic areas, namely polygons, lines,
 # and points. Each tract is represented as a polygon (i.e. some shape), and the maptools package 
 # provides the readShapePoly() function to load the data
 
 # California shapefile for Census tracts
-catract.shp <- readShapePoly("data/tl_2012_06_tract/tl_2012_06_tract.shp", proj4string=CRS("+proj=longlat"))
-capolys <- SpatialPolygonsDataFrame(catract.shp, data=as(catract.shp, "data.frame"))
+# latract.shp <- readShapePoly("./data/la-county-neighborhoods-v6/l.a. county neighborhood (v6).shp", proj4string=CRS("+proj=longlat"))
+# latract.shp <- readShapePoly("data/Territory Manager Zip Codes/geo_export_a178def3-b73e-4fde-99b0-83ed418e66fd.shp", proj4string=CRS("+proj=longlat"))
+latract.shp <- readShapePoly("tl_2012_06_tract/tl_2012_06_tract.shp", proj4string=CRS("+proj=longlat"))
+# catract.shp <- readShapePoly("data/tl_2012_06_tract/tl_2012_06_tract.shp", proj4string=CRS("+proj=longlat"))
+# capolys <- SpatialPolygonsDataFrame(latract.shp, data=as(latract.shp, "data.frame"))
+capolys <- SpatialPolygonsDataFrame(latract.shp, data=as(latract.shp, "data.frame"))
+
 head(capolys@data)
 
 # You have two data sources. One is population for California Census tracts and the other is a
@@ -85,9 +106,27 @@ head(capolys@data)
 # first variable alphanumerically, but you want the data to maintain its original order. Then the
 # variable of interest is stored as plotvar and divided by 1,000 to make one dot per 1,000 people.
 
+
+# # chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2009"))
+# chci <- data.frame(read_excel("lacounty_zip_chci.xlsx", sheet="2012"))
+
+
+
 # Merge datasets
+# ladata <- merge(capolys@data, calitech.17, by.x="GEOID", by.y="geoid2", sort=FALSE)
 cadata <- merge(capolys@data, calipop.sub, by.x="GEOID", by.y="geoid2", sort=FALSE)
-plotvar <- cadata$totalpop / 1000		# One dot per 1,000 people
+# cadata <- merge(income, la17, by.x="GEOID", by.y="GEOID", sort=FALSE)
+# calitech.17$GEOID <- as.numeric(calitech.17$GEOID)
+
+
+
+head(capolys@data)
+str(calitech.17)
+# cadata <- as.data.frame(zip.sf.17)
+head(cadata)
+
+# plotvar <- cadata$tech07 / 1000		# One dot per 1,000 people
+plotvar <- cadata$tech07
 
 # Generate dots based on data
 # It seems like the hard part of making dot density maps is figuring out where to put the dots
@@ -96,7 +135,7 @@ plotvar <- cadata$totalpop / 1000		# One dot per 1,000 people
 # estimate for each polygon, and the last argument says to draw dots randomly within each polygon
 
 # Generate random dots in polygons (e.g. census tracts)
-cadots.rand <- dotsInPolys(capolys, as.integer(plotvar), f="random")
+cadots.rand <- dotsInPolys(, as.integer(plotvar), f="random")
 # This gives you a data frame with coordinates for all the dots
 
 # we draw county lines for a point of reference (even though we calculated dots based on tract-level 
@@ -105,7 +144,9 @@ cadots.rand <- dotsInPolys(capolys, as.integer(plotvar), f="random")
 # SpatialPolygonsDataFrame() to convert the data to a data frame.
 
 # Map boundaries
-cacounties.shp <- readShapePoly("data/california/california_county_shape_file.shp", proj4string=CRS("+proj=longlat"))
+# cacounties.shp <- readShapePoly("data/california/california_county_shape_file.shp", proj4string=CRS("+proj=longlat"))
+cacounties.shp <- readShapePoly("data/Territory Manager Zip Codes/geo_export_a178def3-b73e-4fde-99b0-83ed418e66fd.shp", proj4string=CRS("+proj=longlat"))
+
 cacounties <- SpatialPolygonsDataFrame(cacounties.shp, data=as(cacounties.shp, "data.frame"))
 
 # Set zero margins in plot window, so that map fits

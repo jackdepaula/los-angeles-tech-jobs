@@ -1,6 +1,6 @@
 #####################################################################################################
 #
-# Bureau of Statistics -  Data set: https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+# Bureau of Statistics -  Data set: https://www.bls.gov/emp/tables/emp-by-major-occupational-group.html
 #
 #####################################################################################################
 
@@ -22,10 +22,16 @@ library("ggthemes") # The ggthemes package provides multiple themes, which are c
 library("readxl")
 
 occupation <- read_excel("./data/occupation.xlsx", sheet = "Table 1.1", skip = 2)
-# occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
-occupation <- occupation[1:10,] ### Keeps only top 10 rows
+occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
+# occupation <- occupation[1:10,] ### Keeps only top 10 rows
 colnames(occupation) <- c("industry","code", "2016", "2026", "change2026", "perchange206","median_wages17")
-
+# Rename Industries
+occupation$industry <- c("Total All Occupations","Management","Business & Financial Operations","Computer & Mathematical","Architecture & Engineering",
+                          "Life, Physical, & Social Science","Community & Social Service","Legal","Education, Training & Library","Arts & Recreation",
+                          "Health Practitioners & Technicians","Healthcare Support","Protective Service","Food & Serving","Cleaning & Maintenance",
+                          "Personal Care & Service","Sales","Administrative","Farming, Fishing, & Forestry","Construction & Extraction",
+                          "Installation, Maintenance, & Repair","Production","Transportation & Material Moving")
+                         
 
 # Creating the Bar Plot
 ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17))
@@ -93,7 +99,7 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17)) +
 # Color is visual attribute that can be mapped to a variable in the aesthetics layer. Let us first create a dummy variable called manu 
 # that is equal to 1 if the industry variable is equal to Computer and mathematical occupations" and 0 otherwise.
 
-occupation$compu <- (occupation$industry == "Computer and mathematical occupations")
+occupation$compu <- (occupation$industry == "Computer & Mathematical")
 
 # The expression (df$industry == Computer and mathematical occupations") will compare every observation in the industry variable and return a value Boolean TRUE if the expression is true and FALSE if the value is false.
 # Next, we build our plot again from the beginning, this time including another mapping in the aesthetics layer.
@@ -131,8 +137,52 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
   coord_flip() + 
   theme(legend.position="none") + 
   scale_fill_manual(values=mycols) + 
-  geom_text(aes(label = median_wages17), nudge_y = 2, color = "black")
+  geom_text(aes(label = median_wages17), nudge_y = 2, color = "black") 
 
+# add geom_hline showing "Total media wages"
+# # Change the "horizontal justification" to be left-justified with hjust 
+
+mycols <- c("deepskyblue4", "seagreen")
+m <- ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous(labels=dollar) +
+  labs(title="2017 Top 10 Median Wages by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = median_wages17), color = "black", hjust=-0.1) +
+  geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
+
+m
+# remove all occupations
+
+occupation <- occupation[2:23,]
+
+# Number jobs change 2026
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$change2026, mean, na.rm=TRUE)
+ggplot(data=occupation, mapping=aes(x=industry, y=change2026, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous() +
+  labs(title="2016-2026 Employment Jobs Growth Projection by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = change2026), color = "black", hjust=-0.1) 
+  # geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
+
+
+# % growth change 2026
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$perchange206, mean, na.rm=TRUE)
+ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous() +
+  labs(title="2016-2026 Employment Percenatage Growth Projection by Industry", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = perchange206), color = "black", hjust=-0.1)
 
 
 

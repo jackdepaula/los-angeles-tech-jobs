@@ -46,8 +46,9 @@ library(rgdal)
 #
 ###############################################
 
+# lacounty_data  <- fread("./data/lacountytech.csv")
 
-lacounty_data  <- fread("./data/lacountytech.csv")
+lacounty_data  <- fread("lacountytech.csv")
 
 ## geting the state boundry file from package tigris
 # If you have issues with API, download from Tiger's Website
@@ -128,3 +129,7 @@ my_int_17 %>%
   addProviderTiles("CartoDB.Positron") %>%
   setView(lng = -118.2437, lat = 34.0522, zoom = 9)
 
+# # Map color scale
+# breaks <- c(0, 2, 4, 6, 8, 10, 12, 14, 100)
+# pal <- colorRampPalette(c("#b9d7ef", "#102d44"))
+# col <- pal(length(breaks)-1)
