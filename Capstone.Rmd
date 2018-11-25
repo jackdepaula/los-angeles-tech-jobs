@@ -16,20 +16,30 @@ output:
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
 
-# install.packages("tidyverse") 
-# install.packages("scales")
-# install.packages("stringr")
-# install.packages("Hmisc") 
-# install.packages("forcats") 
-# install.packages("ggthemes") 
+# Bureau Labor Statistics
 
-library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
-library("scales") # use to customize the scales of our axes.
-library("stringr") # allows for manipulating of string and labels.
-library("Hmisc") # provides mathematical and statistical functions to use with plots.
-library("forcats") # provides tools for manipulating categorical variables.
-library("ggthemes") # provides multiple themes with combinations of parameters to change a plots look and feel
-library("readxl")
+  # install.packages("tidyverse") 
+  # install.packages("scales")
+  # install.packages("stringr")
+  # install.packages("Hmisc") 
+  # install.packages("forcats") 
+  # install.packages("ggthemes") 
+  library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+  library("scales") # use to customize the scales of our axes.
+  library("stringr") # allows for manipulating of string and labels.
+  library("Hmisc") # provides mathematical and statistical functions to use with plots.
+  library("forcats") # provides tools for manipulating categorical variables.
+  library("ggthemes") # provides multiple themes with combinations of parameters to change a plots look and feel
+  library("readxl")
+
+# correlation
+
+  # library(readxl)
+  library(tidycensus)
+  # library(tidyverse)
+
+
+
 ```
 # City
 <br>
@@ -75,13 +85,17 @@ occupation$industry <- as.factor(occupation$industry)
 levels(occupation$industry)
 
 # Reordering Bars by Mean
-
-# It is often useful for visual communication if the bars are ordered by height (mean). This allows the reader to 
-# determine at a glance which industries earn the highest and lowest wages and where a particular industry falls
-# in the distribution.
 levels(occupation$industry)
 
-occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)
+occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)# The function takes four parameters: 
+# (1) the factor variable to order levels,
+# (2) the numerical variable to compute the mean (or other statistic) for each level
+# (3) the summary statistic function we wish to use for ordering - we will pass along mean, but you can potentially
+#     pass along another function like median or sum, and 
+# (4) any parameters that you need to pass to the summary statistic function. In our case, we will pass the parameter,
+#     na.rm=TRUE, so that the mean() function ignores missing values. The function returns a new factor variable whose 
+#     levels are ordered appropriately, but it is otherwise equal to the original factor.
+#     we call fct_reorder() and let the output overwrite our current industry variable in data frame df.
 
 occupation$compu <- (occupation$industry == "Computer & Mathematical")
 ```
@@ -113,7 +127,7 @@ occupation$industry <- fct_reorder(occupation$industry, occupation$change2026, m
 ggplot(data=occupation, mapping=aes(x=industry, y=change2026, fill=compu)) +
   stat_summary(fun.y=mean, geom="bar") +
   scale_y_continuous() +
-  labs(title="2016-2026 Employment Jobs Growth Projection by Industry", x="", y="") + 
+  labs(title="Employment Jobs Growth Projection by Industry 2016-2026 ", x="", y="") + 
   coord_flip() + 
   theme(legend.position="none") + 
   scale_fill_manual(values=mycols) + 
@@ -126,7 +140,7 @@ occupation$industry <- fct_reorder(occupation$industry, occupation$perchange206,
 ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
   stat_summary(fun.y=mean, geom="bar") +
   scale_y_continuous() +
-  labs(title="2016-2026 Employment Percenatage Growth Projection by Industry", x="", y="") + 
+  labs(title="Employment Percenatage Growth Projection by Industry 2016-2026 ", x="", y="") + 
   coord_flip() +
   theme(legend.position="none") +
   scale_fill_manual(values=mycols) +
@@ -144,6 +158,7 @@ Tech employees are compensated nicely due to this tech boom. For example, in 207
 
 
 # Total Jobs & Grownth from 2012 to 2017 - Dinamic Visualization
+
 
 <center>**GoogleVis Motion Chart** </center><br>
 
@@ -163,6 +178,23 @@ Figure 3 shows the total tech jobs in the city of Los Angeles and County.
 
 Figure 4 represents the year over year grownth of Tech jobs in the city of Los Angeles anc County.
 
+## Motion Chart
+```{r MotionChartExample, results='asis', tidy=FALSE}
+M <- gvisMotionChart(Fruits, 'Fruit', 'Year',
+         options=list(width=400, height=350))
+plot(M)
+```
+Please note that the Motion Chart is only displayed when hosted on a
+web server, or is placed in a directory which has been added to the 
+trusted sources in the [security settings of Macromedia]
+(http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html). 
+See the googleVis package vignette for more details. 
+
+```{r resetOptions}
+## Set options back to original options
+options(op)
+```
+
 # Density of Tech Jobs by zip code from 2012 to 2017 - Dinamic Visualization
 
 <center><img  src="./images/tech_10.gif"></center><br>
@@ -178,21 +210,23 @@ California is the center of high-tech and innovation in the world.  [18].
 <br>
 Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
 
-```{r fig8, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-knitr::opts_chunk$set( fig.height = 3.5, split=FALSE, fig.align = 'center')
-library(readxl)
-library(tidycensus)
-library(tidyverse)
+```{r correlation, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+# load data
 chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2012"))
+
 # Getting data from the 2012-2016 5-year ACS
 income <- get_acs(geography = "zcta", 
                   variables = c(medincome = "B19013_001"))
+
 cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
+
 # Create the scatter plot with regression line
+
 p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
   geom_point(colour = "blue", size=4) + 
   labs(title = "Fig. 8 ",
-       x = "City Human Capital Index", y = "Median Household Income") +
+       x = "City Human Capital Index", y = "Median Household Income ($)") +
   scale_x_continuous(limits = c(85, 175)) +
     geom_smooth(colour = "red", method=lm,   # Add linear regression line
               se=FALSE)    # Don't add shaded confidence region
