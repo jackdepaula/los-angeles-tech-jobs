@@ -31,6 +31,8 @@ J = gvisMotionChart(lacounty_data, idvar="location", timevar="year", xvar = "all
 
 plot(J)
 
+print(J, "chart")
+
 # It will open browser to show visulization, the site needs Flash 
 # to work & # internet connection is required.
 # 
