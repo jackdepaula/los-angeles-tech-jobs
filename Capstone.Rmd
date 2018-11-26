@@ -643,7 +643,7 @@ Figure 2 shows the evolution of Tech Jobs by zip code from 2012 to 2017
 
 <center><img  src="./images/tmap.png"></center><br>
 
-```{r dot density, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+```{r maptools , include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
 # Load data
 lacounty_data  <- fread("./data/lacountytech.csv")
@@ -701,17 +701,22 @@ cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
 cacounties.shp <- zips.shp
 cacounties <- SpatialPolygonsDataFrame(cacounties.shp, data=as(cacounties.shp, "data.frame"))
 
+```
+
+```{r Dot Density Map}
+
 # Set zero margins in plot window, so that map fits
 par(mar=c(0,0,0,0))
-plot(zips.shp, lwd=0.1)
+# plot(zips.shp, lwd=0.1)
 
 # Plot a specific region - zooms in LA conty
 plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
 plot(cadots.rand, add=T, pch=19, cex=0.1, col="#0000ff") # Blue    --- "#09900d" for Green
+
 ```
-
+<br>
 Fig. X shows **dot density** for all tech jobs in LA county. Each dot = 10 people
-
+<br>
 
 ```{r leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
