@@ -1,0 +1,134 @@
+---
+title: "Untitled"
+author: "Joao de Paula"
+date: "11/25/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Bureau Labor Statistics
+
+  # install.packages("tidyverse") 
+  # install.packages("scales")
+  # install.packages("stringr")
+  # install.packages("Hmisc") 
+  # install.packages("forcats") 
+  # install.packages("ggthemes") 
+  library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
+  library("scales") # use to customize the scales of our axes.
+  library("stringr") # allows for manipulating of string and labels.
+  library("Hmisc") # provides mathematical and statistical functions to use with plots.
+  library("forcats") # provides tools for manipulating categorical variables.
+  library("ggthemes") # provides multiple themes with combinations of parameters to change a plots look and feel
+  library("readxl")
+
+# Correlation
+
+  # library(readxl)
+  # library(tidyverse)
+  library(tidycensus) # downloads Census cartographic boundary shapefiles 
+
+      # Before running code like the following from tidycensus,
+      # you need to obtain an API key from the Census and then 
+      # use the function census_api_key() to set it in R.
+      # Request API: https://api.census.gov/data/key_signup.html
+
+      # Once you have your key intall using the following:
+      # census_api_key("777_your_key_777abc", install = TRUE) 
+
+      # First time, reload your environment so you can use the key without restarting R.
+      # readRenviron("~/.Renviron")
+
+      # If you do not have an .Renviron file, the function will create on for you. If you already have
+      # an .Renviron file, the function will append the key to your existing file, while making a backup
+      # of your original file for disaster recovery purposes.
+
+      # You can check your key with:
+      Sys.getenv("CENSUS_API_KEY")
+      
+# Load Zip Code Payroll Data
+      
+      library(readxl)
+      
+
+```
+
+
+# City
+<br>
+<center><img  src="./images/city.jpg"></center><br>
+<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a>
+<br>
+Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
+
+# County
+<br>
+<center><img  src="./images/county.jpg"></center><br>
+<center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> 
+<br>
+Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
+<br>
+LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpanies like Amazon, Tesla, etc ...have headquarters in Los Angeles. It is a vibrant segment of the economy. While California is the 7th economy in the world, Los Angeles is the 24th economy in the world bigger than countries like ....
+<br>
+Let's take a look at the tech industry employment [1] numbers for the past 13 years.
+<br>
+
+# Wages and Prospect
+
+```{r Bureau Labor Statistics, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
+
+# Load data
+occupation <- read_excel("./data/occupation.xlsx", sheet = "Table 1.1", skip = 2)
+occupation <- occupation[1:23,] ### Removes Annotaions - keeps all data
+colnames(occupation) <- c("industry","code", "2016", "2026", "change2026", "perchange206","median_wages17")
+
+# Rename industries
+occupation$industry <- c("Total All Occupations","Management","Business & Financial Operations",
+                         "Computer & Mathematical","Architecture & Engineering",
+                          "Life, Physical, & Social Science","Community & Social Service","Legal",
+                         "Education, Training & Library","Arts & Recreation",
+                          "Health Practitioners & Technicians","Healthcare Support","Protective Service",
+                         "Food & Serving","Cleaning & Maintenance",
+                          "Personal Care & Service","Sales","Administrative",
+                         "Farming, Fishing, & Forestry","Construction & Extraction",
+                          "Installation, Maintenance, & Repair","Production","Transportation & Material Moving")
+                         
+# Fix Labels
+occupation$industry <- as.factor(occupation$industry)
+levels(occupation$industry)
+
+# Reordering Bars by Mean
+levels(occupation$industry)
+
+occupation$industry <- fct_reorder(occupation$industry, occupation$median_wages17, mean, na.rm=TRUE)
+
+# The function takes four parameters: 
+# (1) the factor variable to order levels,
+# (2) the numerical variable to compute the mean (or other statistic) for each level
+# (3) the summary statistic function we wish to use for ordering - we will pass along mean, but you can potentially
+#     pass along another function like median or sum, and 
+# (4) any parameters that you need to pass to the summary statistic function. In our case, we will pass the parameter,
+#     na.rm=TRUE, so that the mean() function ignores missing values. The function returns a new factor variable whose 
+#     levels are ordered appropriately, but it is otherwise equal to the original factor.
+#     we call fct_reorder() and let the output overwrite our current industry variable in data frame df.
+
+occupation$compu <- (occupation$industry == "Computer & Mathematical")
+```
+
+```{r Median Wages by Industry in 2017}
+# add geom_hline showing "Total media wages"
+# # Change the "horizontal justification" to be left-justified with hjust 
+
+mycols <- c("blue", "red")
+ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
+  stat_summary(fun.y=mean, geom="bar") +
+  scale_y_continuous(labels=dollar) +
+  labs(title="Median Wages by Industry in 2017", x="", y="") + 
+  coord_flip() + 
+  theme(legend.position="none") + 
+  scale_fill_manual(values=mycols) + 
+  geom_text(aes(label = median_wages17), color = "black", hjust=-0.1) +
+  geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
+```
