@@ -98,6 +98,9 @@ lacounty_data <- inner_join(cnty.zips, lacounty_data, by = "GEOID")
 df.17 <- lacounty_data %>% filter(year == 2017)
 cnty.zips.17 <- cnty.zips
 
+# Subset for 2005
+df.05 <- lacounty_data %>% filter(year == 2005)
+
 # 
 # is.element(cnty.zips.17$GEOID, df.17$GEOID)
 
@@ -136,6 +139,7 @@ library(maptools)
 
 # plotvar <- cadata$totalpop / 1000		# One dot per 1,000 people
 # plotvar <- df.17$tech
+plottitle <- "Tech Jobs 2017, each dot=10"
 plotvar <- df.17$tech/10
 cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
 
@@ -162,6 +166,9 @@ plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860
 # plot(cadots.rand, add=T, pch=19, cex=0.1, col="#008800")
 # plot(cadots.rand, add=T, pch=19, cex=0.1, col="#09900d") # Green
 plot(cadots.rand, add=T, pch=19, cex=0.1, col="#0000ff") # Blue
+text(5, 6, labels = "2017", family="sans", cex=3, pos=3)
+
+# title(plottitle)
 
 
 # Use a different color for info and prof
@@ -199,7 +206,7 @@ map_test <- leaflet(zips.shp) %>%
 map_test
 
 
-# Tech - 10 bins
+# 2017 Tech - 10 bins
 
 qpal <- colorQuantile("Blues", df.17$tech  , n = 10)
 map_tech17 <- leaflet(zips.shp) %>%
@@ -213,6 +220,21 @@ map_tech17 <- leaflet(zips.shp) %>%
 
 
 map_tech17
+
+# 2005 Tech - 10 bins
+
+qpal <- colorQuantile("Blues", df.05$tech  , n = 10)
+map_tech05 <- leaflet(zips.shp) %>%
+  setView(lng = -118.2437, lat = 34.2522, zoom = 10) %>%
+  addPolygons(stroke = FALSE,
+              smoothFactor = 0.2,
+              fillOpacity = 1,
+              color = ~qpal(df.05$tech)) %>%
+  leaflet::addLegend(pal = qpal, values = ~df.05$tech,
+                     title = "2005 Tech Jobs", opacity = 0.7, position = 'bottomleft')
+
+
+map_tech05
 
 
 # border color
@@ -246,6 +268,7 @@ lacounty_data$GEOID <-as.numeric(zip$ZCTA5CE10)
 zip.sf<-left_join(lacounty_data, zip,by=c("GEOID"="ZCTA5CE10"))
 
 str(lacounty_data)
+class(lacounty_data)
 
 # Merge sf object and data frame
 st_geometry(zip.sf) <- zip.sf$geometry
@@ -271,6 +294,7 @@ map %>%
   setView(lng = -118.2437, lat = 34.0522, zoom = 9) %>% 
   addProviderTiles("CartoDB.Positron")
 
+# ** ##
 # Green Map 15 color bins
 my_int_17 <- tm_shape(zip.sf.17) +
   tm_polygons("per", id = "GEOID", n = 15, palette = "BuGn")
