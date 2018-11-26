@@ -720,9 +720,31 @@ Fig. X shows **dot density** for all tech jobs in LA county. Each dot = 10 peopl
 
 ```{r leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
+# 2017 Tech - 10 bins
+
+qpal <- colorQuantile("Blues", df.17$tech  , n = 10)
+map_tech17 <- leaflet(zips.shp) %>%
+  setView(lng = -118.2437, lat = 34.2522, zoom = 10) %>%
+  addPolygons(stroke = FALSE,
+              smoothFactor = 0.2,
+              fillOpacity = 1,
+              color = ~qpal(df.17$tech)) %>%
+  leaflet::addLegend(pal = qpal, values = ~df.17$tech,
+                     title = "2017 Tech Jobs", opacity = 0.7, position = 'bottomleft')
+map_tech17
+
 ```
 
 ```{r tmap,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+# Using zips shape file (LA County)
+map <- tm_shape(zips.shp) +
+  tm_polygons()
+tmap_mode('view')
+map <- tmap_leaflet(map)
+map %>% 
+  setView(lng = -118.2437, lat = 34.0522, zoom = 9) %>% 
+  addProviderTiles("CartoDB.Positron")
 
 ```
 
