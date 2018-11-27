@@ -864,22 +864,71 @@ https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
 # install.packages("portfolio")
 library(portfolio)
 
+install.packages("treemap")
+library(treemap)
+
 df.17$GEOID <- as.factor(df.17$GEOID)
 names(masterzip) <- c("GEOID", "name")
 z <- inner_join(df.17, masterzip, by = "GEOID")
 str(z)
+
+
+t <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
+
+# make a tree map
+treemap(dtf = t,
+        index=c("name"),
+        vSize="per",
+        vColor="tech",
+        palette="Blues",
+        type="value",
+        border.col=c("grey70", "grey90"),
+        fontsize.title = 18,
+        algorithm="pivotSize",
+        title ="Treemap of the top 15 NZ's most populous cities",
+        title.legend="Population density (people/km^2)")
+
+
+
+
+
 # y <- z[order(-z$per),]
 # y <- z[1:20,]
 # y$name <- c("Universal City","Glenoaks","Burbank 1","Playa Vista","Santa Monica","Burbank 2","Century City", "Cheviot Hills (City of LA)/Rancho Park", "Edwards AFB","Venice","Culver City","Hollywood","ARCO Towers (City of LA)","Mar Vista","Encino") 
 # map.market(id=y$GEOID, area=y$per, group=y$name, color=y$per, main="Percentage")
 
-x <- z[order(-z$info),]
-x <- z[1:20,]
-map.market(id=x$GEOID, area=x$per, group=x$name, color=x$per, main="Info")
 
-z <- z[order(-z$prof),]
-z <- z[1:20,]
-map.market(id=z$GEOID, area=z$per, group=z$name, color=z$per, main="Professional")
+# map.market(id=z$GEOID, area=z$per, group=z$name, color=z$per, main="Professional")
+
+## Heat Map
+
+
+t <- z %>% arrange(desc(per)) %>% top_n(50, wt=per)
+row.names(t) <- t$GEOID
+
+# leaders <- z[order(z$per),]
+# row.names(t) <- t$x
+# row.names(z) <- z$name
+t <- t[,5:9]
+# names(t) <- c("Information", "Professional", "Tech Density")
+# leaders <- leaders[,2:9]
+tech_matrix <- data.matrix(t)
+
+
+my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+heatmap(tech_matrix, Rowv=NA, Colv=NA, col = cm.colors(256), scale="column", margins=c(5,10))
+
+heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, scale="column", margins=c(5,10))
+
+col_breaks = c(seq(-1,0,length=100),  # for red
+  seq(0.10,30,length=100),           # for yellow
+  seq(0.81,1,length=100))             # for green
+heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, breaks=col_breaks, scale="column",dendrogram="row", margins=c(5,10))
+
+
+
+
+
 
 ```
 
