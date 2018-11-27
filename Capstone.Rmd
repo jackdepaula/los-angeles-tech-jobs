@@ -598,7 +598,6 @@ ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
   geom_text(aes(label = perchange206), color = "black", hjust=-0.1)
 ```
 
-<br>
 2017 Employment by major occupational group, 2016 and projected 2026 (Numbers in thousands) [1]. 
 Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
 <br>
@@ -608,39 +607,12 @@ Tech employees are compensated nicely due to this tech boom. For example, in 207
 # Dinamic Visualizations
 
 <br>
-<center><img  src="./images/gviz1-COLLAGE.jpg"></center><br>
-<br>
-Figure 1 shows the total jobs in the city of Los Angeles and County.
-
-```{r gif animation}
-# install imageMagick
-# https://www.imagemagick.org/script/download.php#windows
-
-# Tutorials
-# https://ryanpeek.github.io/2016-10-19-animated-gif_maps_in_R/
-# https://cran.r-project.org/web/packages/magick/vignettes/intro.html
-
-# library(magick) # this is call to animate/read pngs
-
-# save all png files to path folder
-
-# create gif
-# list.files(path = "C:/Users/joao_/Downloads/Gif/", pattern = "*.png", full.names = T) %>%
-#   map(image_read) %>% # reads each path file
-#   image_join() %>% # joins image
-#   image_animate(fps=100) %>% # animates, can opt for number of loops
-#   image_write("tech_100.gif") # write to current dir
-```
-
-
-<center><img  src="./images/tech_10.gif"></center><br>
-<br>
-Figure 2 shows the evolution of Tech Jobs by zip code from 2012 to 2017
-<br>
+<center><img  src="./images/gviz1-COLLAGE.jpg"></center>
+<center>Total jobs in the city of Los Angeles and County<center>
 
 # Maps
 
-<center><img  src="./images/tmap.png"></center><br>
+<!-- <center><img  src="./images/tmap.png"></center><br> -->
 
 ```{r maptools , include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -690,12 +662,6 @@ df.17$GEOID<-as.numeric(df.17$GEOID)
 # Dot Density Maps using maptools
 library(maptools)
 
-# One dot per 10 people
-plotvar <- df.17$tech/10
-
-# Calculated random dots for each zip code and store the coordinates in cadots.rand
-cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
-
 # Map boundaries
 cacounties.shp <- zips.shp
 cacounties <- SpatialPolygonsDataFrame(cacounties.shp, data=as(cacounties.shp, "data.frame"))
@@ -708,42 +674,129 @@ cacounties <- SpatialPolygonsDataFrame(cacounties.shp, data=as(cacounties.shp, "
 par(mar=c(0,0,0,0))
 # plot(zips.shp, lwd=0.1)
 
+# One dot per 10 people
+plotvar <- df.17$tech/10
+
+# Calculated random dots for each zip code and store the coordinates in cadots.rand
+cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
+
 # Plot a specific region - zooms in LA conty
 plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
-plot(cadots.rand, add=T, pch=19, cex=0.1, col="#0000ff") # Blue    --- "#09900d" for Green
+plot(cadots.rand, add=T, pch=19, cex=0.1, col="#000080", border="red") # Blue ---- "#09900d" Green
+
 
 ```
-<br>
-Fig. X shows **dot density** for all tech jobs in LA county. Each dot = 10 people
+<center>**2017 Dot density map** for each zip code LA county.<center>
+<center>Each dot = 10 tech jobs<center>
 <br>
 
+```{r gif animation}
+# install imageMagick
+# https://www.imagemagick.org/script/download.php#windows
+
+# Tutorials
+# https://ryanpeek.github.io/2016-10-19-animated-gif_maps_in_R/
+# https://cran.r-project.org/web/packages/magick/vignettes/intro.html
+
+# library(magick) # this is call to animate/read pngs
+
+# save all png files to path folder
+
+# create gif
+# list.files(path = "C:/Users/joao_/Downloads/Gif/", pattern = "*.png", full.names = T) %>%
+#   map(image_read) %>% # reads each path file
+#   image_join() %>% # joins image
+#   image_animate(fps=100) %>% # animates, can opt for number of loops
+#   image_write("tech_100.gif") # write to current dir
+```
 ```{r leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
-# 2017 Tech - 10 bins
-
-qpal <- colorQuantile("Blues", df.17$tech  , n = 10)
-map_tech17 <- leaflet(zips.shp) %>%
-  setView(lng = -118.2437, lat = 34.2522, zoom = 10) %>%
-  addPolygons(stroke = FALSE,
-              smoothFactor = 0.2,
-              fillOpacity = 1,
-              color = ~qpal(df.17$tech)) %>%
-  leaflet::addLegend(pal = qpal, values = ~df.17$tech,
-                     title = "2017 Tech Jobs", opacity = 0.7, position = 'bottomleft')
-map_tech17
+# # 2017 Tech - 10 bins
+# 
+# qpal <- colorQuantile("Blues", df.17$tech  , n = 10)
+# map_tech17 <- leaflet(zips.shp) %>%
+#   setView(lng = -118.2437, lat = 34.2522, zoom = 10) %>%
+#   addPolygons(stroke = FALSE,
+#               smoothFactor = 0.2,
+#               fillOpacity = 1,
+#               color = ~qpal(df.17$tech)) %>%
+#   leaflet::addLegend(pal = qpal, values = ~df.17$tech,
+#                      title = "2017 Tech Jobs", opacity = 0.7, position = 'bottomleft')
+# map_tech17
 
 ```
+
+```{r new leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+
+# install.packages("leaflet.extras")
+library(leaflet.extras)
+
+# 2017 new
+
+pal <- colorQuantile("Blues", NULL, n = 12)
+popup <- paste0("<strong>Zip code: </strong>", 
+                      df.17$GEOID, 
+                      "<br><strong>% Tech Jobs: </strong>", 
+                      df.17$per,
+                      "<br><strong>Professional Jobs: </strong>", 
+                      df.17$prof,
+                      "<br><strong>Information Jobs: </strong>", 
+                      df.17$info)
+
+
+m <- leaflet(data = zips.shp) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addResetMapButton() %>%
+  addSearchOSM() %>%
+  addSearchGoogle() %>%
+  addSearchUSCensusBureau() %>% 
+  addPolygons(fillColor = ~pal(df.17$per), 
+              fillOpacity = 0.8, 
+              color = "#BDBDC3", 
+              weight = 1,
+              popup = popup)
+m
+
+# List of map providers
+# https://leaflet-extras.github.io/leaflet-providers/preview/
+
+# providers$Esri.WorldStreetMap 
+# m1 <- leaflet(data = zips.shp) %>%
+#   addProviderTiles(providers$Esri.WorldStreetMap) %>%
+#   addResetMapButton() %>%
+#   addSearchOSM() %>%
+#   addSearchGoogle() %>%
+#   addSearchUSCensusBureau() %>% 
+#   addPolygons(fillColor = ~pal(df.17$per), 
+#               fillOpacity = 0.8, 
+#               color = "#BDBDC3", 
+#               weight = 1,
+#               popup = popup)
+# m1
+
+
+
+```
+
+
+
+<!-- <center><img  src="./images/tech_10.gif"></center><br> -->
+<!-- <br> -->
+<!-- Figure 2 shows the evolution of Tech Jobs by zip code from 2012 to 2017 -->
+<!-- <br> -->
+
 
 ```{r tmap,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
-# Using zips shape file (LA County)
-map <- tm_shape(zips.shp) +
-  tm_polygons()
-tmap_mode('view')
-map <- tmap_leaflet(map)
-map %>% 
-  setView(lng = -118.2437, lat = 34.0522, zoom = 9) %>% 
-  addProviderTiles("CartoDB.Positron")
+# # Using zips shape file (LA County)
+# map <- tm_shape(zips.shp) +
+#   tm_polygons()
+# tmap_mode('view')
+# map <- tmap_leaflet(map)
+# map %>% 
+#   setView(lng = -118.2437, lat = 34.0522, zoom = 9) %>% 
+#   addProviderTiles("CartoDB.Positron")
 
 ```
 
@@ -763,6 +816,9 @@ chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2012"))
 # Getting data from the 2012-2016 5-year ACS
 income <- get_acs(geography = "zcta", 
                   variables = c(medincome = "B19013_001"))
+
+# In case API is not working
+# write.csv(income, "data/income.csv")
 
 cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
 
@@ -862,31 +918,31 @@ https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
 ```{r Tree Map, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
 # install.packages("portfolio")
-library(portfolio)
+# library(portfolio)
+# 
+# # install.packages("treemap")
+# library(treemap)
 
-install.packages("treemap")
-library(treemap)
-
-df.17$GEOID <- as.factor(df.17$GEOID)
-names(masterzip) <- c("GEOID", "name")
-z <- inner_join(df.17, masterzip, by = "GEOID")
-str(z)
+# df.17$GEOID <- as.factor(df.17$GEOID)
+# names(masterzip) <- c("GEOID", "name")
+# z <- inner_join(df.17, masterzip, by = "GEOID")
+# str(z)
 
 
-t <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
-
-# make a tree map
-treemap(dtf = t,
-        index=c("name"),
-        vSize="per",
-        vColor="tech",
-        palette="Blues",
-        type="value",
-        border.col=c("grey70", "grey90"),
-        fontsize.title = 18,
-        algorithm="pivotSize",
-        title ="Treemap of the top 15 NZ's most populous cities",
-        title.legend="Population density (people/km^2)")
+# t <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
+# 
+# # make a tree map
+# treemap(dtf = t,
+#         index=c("name"),
+#         vSize="per",
+#         vColor="tech",
+#         palette="Blues",
+#         type="value",
+#         border.col=c("grey70", "grey90"),
+#         fontsize.title = 18,
+#         algorithm="pivotSize",
+#         title ="Treemap of the top 15 NZ's most populous cities",
+#         title.legend="Population density (people/km^2)")
 
 
 
@@ -903,27 +959,27 @@ treemap(dtf = t,
 ## Heat Map
 
 
-t <- z %>% arrange(desc(per)) %>% top_n(50, wt=per)
-row.names(t) <- t$GEOID
-
-# leaders <- z[order(z$per),]
-# row.names(t) <- t$x
-# row.names(z) <- z$name
-t <- t[,5:9]
-# names(t) <- c("Information", "Professional", "Tech Density")
-# leaders <- leaders[,2:9]
-tech_matrix <- data.matrix(t)
-
-
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
-heatmap(tech_matrix, Rowv=NA, Colv=NA, col = cm.colors(256), scale="column", margins=c(5,10))
-
-heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, scale="column", margins=c(5,10))
-
-col_breaks = c(seq(-1,0,length=100),  # for red
-  seq(0.10,30,length=100),           # for yellow
-  seq(0.81,1,length=100))             # for green
-heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, breaks=col_breaks, scale="column",dendrogram="row", margins=c(5,10))
+# t <- z %>% arrange(desc(per)) %>% top_n(10, wt=per)
+# row.names(t) <- t$GEOID
+# 
+# # leaders <- z[order(z$per),]
+# # row.names(t) <- t$x
+# # row.names(z) <- z$name
+# t <- t[,5:9]
+# # names(t) <- c("Information", "Professional", "Tech Density")
+# # leaders <- leaders[,2:9]
+# tech_matrix <- data.matrix(t)
+# 
+# 
+# my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = cm.colors(256), scale="column", margins=c(5,10))
+# 
+# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, scale="column", margins=c(5,10))
+# 
+# col_breaks = c(seq(-1,0,length=100),  # for red
+#   seq(0.10,30,length=100),           # for yellow
+#   seq(0.81,1,length=100))             # for green
+# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, breaks=col_breaks, scale="column",dendrogram="row", margins=c(5,10))
 
 
 
