@@ -497,16 +497,15 @@ rm(laz17tech)
 <center><img  src="./images/city.jpg"></center><br>
 <center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a>
 <br>
-Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. Between 2015 and 2016 the population of Los Angeles, CA grew from 3.97M to 3.98M, a 0.11% increase and its median household income grew from $52,024 to $54,432, a 4.63% increase.
-
+Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. 
 # County
 <br>
 <center><img  src="./images/county.jpg"></center><br>
 <center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> 
 <br>
-Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. Between 2015 and 2016 the population of Los Angeles County, CA declined from 10.2M to 10.1M, a 0.32% decrease and its median household income grew from $59,134 to $61,338, a 3.73% increase.
+Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. 
 <br>
-LA is a tech hub, with $ x ,000 tech jobs roughhty x% of the nation .... COmpanies like Amazon, Tesla, etc ...have headquarters in Los Angeles. It is a vibrant segment of the economy. While California is the 7th economy in the world, Los Angeles is the 24th economy in the world bigger than countries like ....
+  The tech industry ..... doing well..... Many of the most valuable companies are tehc companies
 <br>
 Let's take a look at the tech industry employment [1] numbers for the past 13 years.
 <br>
@@ -860,4 +859,27 @@ https://geocompr.robinlovelace.net/index.html
 Dowload shape files for county from LA Data Portal
 https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
 
+```{r Tree Map, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+# install.packages("portfolio")
+library(portfolio)
+
+df.17$GEOID <- as.factor(df.17$GEOID)
+names(masterzip) <- c("GEOID", "name")
+z <- inner_join(df.17, masterzip, by = "GEOID")
+str(z)
+# y <- z[order(-z$per),]
+# y <- z[1:20,]
+# y$name <- c("Universal City","Glenoaks","Burbank 1","Playa Vista","Santa Monica","Burbank 2","Century City", "Cheviot Hills (City of LA)/Rancho Park", "Edwards AFB","Venice","Culver City","Hollywood","ARCO Towers (City of LA)","Mar Vista","Encino") 
+# map.market(id=y$GEOID, area=y$per, group=y$name, color=y$per, main="Percentage")
+
+x <- z[order(-z$info),]
+x <- z[1:20,]
+map.market(id=x$GEOID, area=x$per, group=x$name, color=x$per, main="Info")
+
+z <- z[order(-z$prof),]
+z <- z[1:20,]
+map.market(id=z$GEOID, area=z$per, group=z$name, color=z$per, main="Professional")
+
+```
 
