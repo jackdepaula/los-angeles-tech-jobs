@@ -684,6 +684,8 @@ cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
 plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
 plot(cadots.rand, add=T, pch=19, cex=0.1, col="#000080", border="red") # Blue ---- "#09900d" Green
 
+rm(plotvar)
+rm(cadots.rand)
 
 ```
 <center>**2017 Dot density map** for each zip code LA county.<center>
@@ -832,6 +834,37 @@ p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
     geom_smooth(colour = "red", method=lm,   # Add linear regression line
               se=FALSE)    # Don't add shaded confidence region
 p7
+
+# NEW
+
+p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
+  geom_point(colour = "red")
+p1
+
+p2 <- p1 +
+  geom_smooth(mapping = aes(linetype = "r2"),
+              method = "lm",
+              formula = y ~ x , se = FALSE,
+              color = "black")
+p2 + geom_point()
+
+p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
+p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
+p3
+# Labels overlap - use ggrepel
+
+# install.packages("ggrepel") 
+library("ggrepel") # Repel overlapping text labels away from each other.
+p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
+
+
+# Adds Title / Lables
+p5 = p4+
+scale_x_continuous(name = "Corruption Perceptions Index, 2017 (100=least corrupt)")+
+scale_y_continuous(name = "Log GDP Per Capita, 2016") +
+ggtitle("Corruption and GDP Per Capita")
+p5
+
 ```
 
 Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
