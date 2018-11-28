@@ -15,7 +15,6 @@ output:
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo=TRUE, error=FALSE)
-
   # Bureau Labor Statistics
   # install.packages("tidyverse") 
   # install.packages("scales")
@@ -23,7 +22,6 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
   # install.packages("Hmisc") 
   # install.packages("forcats") 
   # install.packages("ggthemes")
-
   library("tidyverse") # contains many packages that allow you to organize, summarize, and plot data.
   library("scales") # use to customize the scales of our axes.
   library("stringr") # allows for manipulating of string and labels.
@@ -35,24 +33,19 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
   # library(readxl)
   # library(tidyverse)
   library(tidycensus) # downloads Census cartographic boundary shapefiles 
-
       # Before running code like the following from tidycensus,
       # you need to obtain an API key from the Census and then 
       # use the function census_api_key() to set it in R.
       # Request API: https://api.census.gov/data/key_signup.html
-
       # Once you have your key intall using the following:
       # census_api_key("777_your_key_777abc", install = TRUE) 
-
       # First time, reload your environment so you can use the key without restarting R.
       # readRenviron("~/.Renviron")
-
       # If you do not have an .Renviron file, the function will create on for you. If you already have
       # an .Renviron file, the function will append the key to your existing file, while making a backup
       # of your original file for disaster recovery purposes.
-
       # You can check your key with:
-      Sys.getenv("CENSUS_API_KEY")
+      # Sys.getenv("CENSUS_API_KEY")
       
 # Load Zip Code Payroll Data
       library(readxl)
@@ -83,15 +76,10 @@ knitr::opts_chunk$set(echo=TRUE, error=FALSE)
       # install.packages("shinythemes")
       # install.packages("tidycensus")
       # install.packages("rmapshaper")
-
-
-
 ```
 
 ```{r Load Zip Code Payroll Data, include=FALSE, echo=FALSE}
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2017"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -118,9 +106,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty17 <- laz17tech
 lacounty17 <- lacounty17[c(1,5,6,3,4,7,2)]
 head(lacounty17)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2016"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -146,9 +132,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty16 <- laz17tech
 lacounty16 <- lacounty16[c(1,5,6,3,4,7,2)]
 head(lacounty16)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2015"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -174,7 +158,6 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty15 <- laz17tech
 lacounty15 <- lacounty15[c(1,5,6,3,4,7,2)]
 head(lacounty15)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2014"))
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
@@ -201,9 +184,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty14 <- laz17tech
 lacounty14 <- lacounty14[c(1,5,6,3,4,7,2)]
 head(lacounty14)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2013"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -229,9 +210,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty13 <- laz17tech
 lacounty13 <- lacounty13[c(1,5,6,3,4,7,2)]
 head(lacounty13)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2012"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -257,12 +236,9 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty12 <- laz17tech
 lacounty12 <- lacounty12[c(1,5,6,3,4,7,2)]
 head(lacounty12)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2011"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
-
 # Remove "Total" in Zip.Code
 laz2017$Zip.Code=gsub("Total","",laz2017$Zip.Code)
 # Replace "*****" with 0
@@ -286,9 +262,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty11 <- laz17tech
 lacounty11 <- lacounty11[c(1,5,6,3,4,7,2)]
 head(lacounty11)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2010"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -314,9 +288,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty10 <- laz17tech
 lacounty10 <- lacounty10[c(1,5,6,3,4,7,2)]
 head(lacounty10)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2009"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -342,9 +314,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty09 <- laz17tech
 lacounty09 <- lacounty09[c(1,5,6,3,4,7,2)]
 head(lacounty09)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2008"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -370,9 +340,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty08 <- laz17tech
 lacounty08 <- lacounty08[c(1,5,6,3,4,7,2)]
 head(lacounty08)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2007"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -398,9 +366,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty07 <- laz17tech
 lacounty07 <- lacounty07[c(1,5,6,3,4,7,2)]
 head(lacounty07)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2006"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -426,9 +392,7 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty06 <- laz17tech
 lacounty06 <- lacounty06[c(1,5,6,3,4,7,2)]
 head(lacounty06)
-
 laz2017 <- data.frame(read_excel("./data/la_zip_payroll.xlsx", sheet="2005"))
-
 # Repalceing NA with the value of 100 because I want to use it to subset/filter the industry
 laz2017[is.na(laz2017)]=100
 # Remove "Total" in Zip.Code
@@ -454,17 +418,13 @@ laz17tech$per = round(((laz17tech$tech / laz17tech$total)*100), 2)
 lacounty05 <- laz17tech
 lacounty05 <- lacounty05[c(1,5,6,3,4,7,2)]
 head(lacounty15)
-
 # Then, bind
 lacountytech=rbind(lacounty05, lacounty06, lacounty07,
                    lacounty08, lacounty09, lacounty10,
                    lacounty11, lacounty12, lacounty13,
                    lacounty14, lacounty15, lacounty16, lacounty17)
-
-
 colnames(lacountytech)[1] <- "GEOID"
 colnames(lacountytech)
-
 # no longer need these variables
 rm(lacounty05)
 rm(lacounty06)
@@ -485,10 +445,8 @@ rm(laz17et)
 rm(laz2017)
 rm(laz17tech.a)
 rm(laz17tech)
-
 # Save as csv
 # write.csv(lacountytech,"lacountytech.csv")
-
 ```
 
 
@@ -617,7 +575,7 @@ Tech employees are compensated nicely due to this tech boom. For example, in 207
 ```{r maptools , include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
 # Load data
-lacounty_data  <- fread("./data/lacountytech.csv")
+# lacounty_data  <- fread("./data/lacountytech.csv")
 
 # Load list of all zip codes in LA county
 masterzip <- data.frame(read_excel("./data/MasterZipCodes.xlsx")) 
@@ -684,8 +642,13 @@ cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar), f="random")
 plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
 plot(cadots.rand, add=T, pch=19, cex=0.1, col="#000080", border="red") # Blue ---- "#09900d" Green
 
-rm(plotvar)
-rm(cadots.rand)
+# rm(plotvar)
+# rm(cadots.rand)
+# rm(cacounties)
+# rm(cacounties.shp)
+# rm(mycols)
+# rm(cnty.zips)
+# rm(cnty.zips.17)
 
 ```
 <center>**2017 Dot density map** for each zip code LA county.<center>
@@ -711,6 +674,7 @@ rm(cadots.rand)
 #   image_animate(fps=100) %>% # animates, can opt for number of loops
 #   image_write("tech_100.gif") # write to current dir
 ```
+
 ```{r leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
 # # 2017 Tech - 10 bins
@@ -727,6 +691,7 @@ rm(cadots.rand)
 # map_tech17
 
 ```
+
 
 ```{r new leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -826,49 +791,152 @@ cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
 
 # Create the scatter plot with regression line
 
-p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
-  geom_point(colour = "blue", size=4) + 
-  labs(title = "Fig. 8 ",
-       x = "City Human Capital Index", y = "Median Household Income ($)") +
-  scale_x_continuous(limits = c(85, 175)) +
-    geom_smooth(colour = "red", method=lm,   # Add linear regression line
-              se=FALSE)    # Don't add shaded confidence region
-p7
+# p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
+#   geom_point(colour = "blue", size=4) + 
+#   labs(title = "Fig. 8 ",
+#        x = "City Human Capital Index", y = "Median Household Income ($)") +
+#   scale_x_continuous(limits = c(85, 175)) +
+#     geom_smooth(colour = "red", method=lm,   # Add linear regression line
+#               se=FALSE)    # Don't add shaded confidence region
+# p7
+
+summary(cor)
+#chci median 141
 
 # NEW
-
 p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
   geom_point(colour = "red")
 p1
-
 p2 <- p1 +
   geom_smooth(mapping = aes(linetype = "r2"),
               method = "lm",
               formula = y ~ x , se = FALSE,
               color = "black")
 p2 + geom_point()
-
 p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
 p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
 p3
 # Labels overlap - use ggrepel
-
 # install.packages("ggrepel") 
 library("ggrepel") # Repel overlapping text labels away from each other.
-p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
-
+p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
+p4
 
 # Adds Title / Lables
 p5 = p4+
-scale_x_continuous(name = "Corruption Perceptions Index, 2017 (100=least corrupt)")+
-scale_y_continuous(name = "Log GDP Per Capita, 2016") +
-ggtitle("Corruption and GDP Per Capita")
+scale_x_continuous(name = "Capital Human City Index")+
+scale_y_continuous(name = "Log Income, 2016") +
+ggtitle("CHCI and Median Income Per Zip Code")
 p5
 
+################
+
+
+
+
+
+
+
+
+## Need to clean code bellow
+
+str(df.17)
+df.17$GEOID <- as.factor(df.17$GEOID)
+names(masterzip) <- c("GEOID", "name")
+z <- inner_join(df.17, masterzip, by = "GEOID")
+str(z)
+top_zip <- z %>% arrange(desc(per)) %>% top_n(20, wt=per)
+
+names(top_zip) <- c("zip", "V1",    "year",  "tech",  "info",  "prof",  "per",   "total", "name")
+str(cor)
+str(top_zip)
+top_zip$zip <- as.numeric(top_zip$zip)
+
+cor <- inner_join(top_zip, cor, by="zip")
+################
+# Create the scatter plot with regression line
+
+# p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
+#   geom_point(colour = "blue", size=4) + 
+#   labs(title = "Fig. 8 ",
+#        x = "City Human Capital Index", y = "Median Household Income ($)") +
+#   scale_x_continuous(limits = c(85, 175)) +
+#     geom_smooth(colour = "red", method=lm,   # Add linear regression line
+#               se=FALSE)    # Don't add shaded confidence region
+# p7
+
+# NEW
+p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
+  geom_point(colour = "red")
+p1
+p2 <- p1 +
+  geom_smooth(mapping = aes(linetype = "r2"),
+              method = "lm",
+              formula = y ~ x , se = FALSE,
+              color = "black")
+p2 + geom_point()
+p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
+p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
+p3
+# Labels overlap - use ggrepel
+# install.packages("ggrepel") 
+library("ggrepel") # Repel overlapping text labels away from each other.
+p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
+p4
+
+# Adds Title / Lables
+p5 = p4+
+scale_x_continuous(name = "Capital Human City Index")+
+scale_y_continuous(name = "Log Income, 2016") +
+ggtitle("CHCI and Median Income Per Zip Code")
+p5
+
+summary(cor)
+# chci media 163
+
+
+
+
+
+
+
+################
+# str(df.17)
+# df.17$GEOID <- as.factor(df.17$GEOID)
+# names(masterzip) <- c("GEOID", "name")
+# z <- inner_join(df.17, masterzip, by = "GEOID")
+# str(z)
+# top_zip <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
+# str(cor)
+# str(top_zip)
+
+
+# # Creates vector with list of top tech zip codes
+# top_zip$GEOID -> zip.label
+# 
+# # Only shows labels from list created
+# 
+# library(ggplot2)
+# library(readxl) 
+# library(tidyverse) # Includes ggplot2
+# library(dplyr)
+# 
+# p6 = p5 + geom_text(aes(label = zip),
+#             color = "gray20", data = filter(cor, cor$zip %in% zip.label))
+# p6
+# 
+# 
+# p4 = p3 + geom_text(aes(label = Country),
+#             color = "gray20", data = filter(cpigdp, Country %in% country.label))
 ```
 
 Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
 
+```{r print table, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+
+ knitr::kable(head(cor))
+
+```
 
 
 # Conclusions
