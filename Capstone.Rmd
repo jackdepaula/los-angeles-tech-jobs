@@ -617,6 +617,7 @@ cacounties <- SpatialPolygonsDataFrame(cacounties.shp, data=as(cacounties.shp, "
 
 ```{r Dot Density Map}
 
+# Tech
 # Set zero margins in plot window, so that map fits
 par(mar=c(0,0,0,0))
 # plot(zips.shp, lwd=0.1)
@@ -639,9 +640,39 @@ plot(cadots.rand, add=T, pch=19, cex=0.1, col="#000080", border="red") # Blue --
 # rm(cnty.zips)
 # rm(cnty.zips.17)
 
+# Info
+# Set zero margins in plot window, so that map fits
+# par(mar=c(0,0,0,0))
+# # plot(zips.shp, lwd=0.1)
+# 
+# # One dot per 10 people
+# plotvar1 <- df.17$info/10
+# 
+# # Calculated random dots for each zip code and store the coordinates in cadots.rand
+# cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar1), f="random")
+# 
+# # Plot a specific region - zooms in LA conty
+# plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
+# plot(cadots.rand, add=T, pch=19, cex=0.1, col="#8B0000", border="red") # Blue ---- "#09900d" Green # #8B0000 Red # #FF4500 Orange
+
+# Professional 
+# Set zero margins in plot window, so that map fits
+# par(mar=c(0,0,0,0))
+# # plot(zips.shp, lwd=0.1)
+# 
+# # One dot per 10 people
+# plotvar2 <- df.17$prof/10
+# 
+# # Calculated random dots for each zip code and store the coordinates in cadots.rand
+# cadots.rand <- dotsInPolys(zips.shp, as.integer(plotvar2), f="random")
+# 
+# # Plot a specific region - zooms in LA conty
+# plot(zips.shp, lwd=0.1, xlim=c(-118.510000,-117.820000), ylim=c(33.710000,34.860000))
+# plot(cadots.rand, add=T, pch=19, cex=0.1, col="#FF4500", border="red") # Blue ---- "#09900d" Green # #8B0000 Red # #FF4500 Orange
+
 ```
-<center>**2017 Dot density map** for each zip code LA county.<center>
-<center>Each dot = 10 tech jobs<center>
+**2017 Dot density zip code map**<br>
+Each dot = 10 tech jobs
 <br>
 
 ```{r gif animation}
@@ -764,7 +795,7 @@ m
 <br>
 Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
 
-```{r correlation, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
+```{r correlation, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
 # load data
 chci <- data.frame(read_excel("./data/lacounty_zip_chci.xlsx", sheet="2012"))
@@ -780,22 +811,14 @@ cor <- merge(chci, income, by.x = "zip", by.y = "GEOID")
 
 # Create the scatter plot with regression line
 
-# p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
-#   geom_point(colour = "blue", size=4) + 
-#   labs(title = "Fig. 8 ",
-#        x = "City Human Capital Index", y = "Median Household Income ($)") +
-#   scale_x_continuous(limits = c(85, 175)) +
-#     geom_smooth(colour = "red", method=lm,   # Add linear regression line
-#               se=FALSE)    # Don't add shaded confidence region
-# p7
 
-summary(cor)
+# summary(cor)
 #chci median 141
 
 # NEW
 p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
   geom_point(colour = "red")
-p1
+# p1
 p2 <- p1 +
   geom_smooth(mapping = aes(linetype = "r2"),
               method = "lm",
@@ -804,12 +827,19 @@ p2 <- p1 +
 p2 + geom_point()
 p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
 p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
-p3
+# p3
 # Labels overlap - use ggrepel
 # install.packages("ggrepel") 
 library("ggrepel") # Repel overlapping text labels away from each other.
 p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
-p4
+# p4
+
+
+
+
+```
+
+```{r Final Correlation}
 
 # Adds Title / Lables
 p5 = p4+
@@ -818,35 +848,37 @@ scale_y_continuous(name = "Log Income, 2016") +
 ggtitle("CHCI and Median Income Per Zip Code")
 p5
 
+
+```
+
+
+
+```{r}
+
 ################
-
-
-
-
-
-
-
 
 ## Need to clean code bellow
 
-str(df.17)
-df.17$GEOID <- as.factor(df.17$GEOID)
-names(masterzip) <- c("GEOID", "name")
-z <- inner_join(df.17, masterzip, by = "GEOID")
-str(z)
-top_zip <- z %>% arrange(desc(per)) %>% top_n(20, wt=per)
-
-names(top_zip) <- c("zip", "V1",    "year",  "tech",  "info",  "prof",  "per",   "total", "name")
-str(cor)
-str(top_zip)
-top_zip$zip <- as.numeric(top_zip$zip)
-
-cor <- inner_join(top_zip, cor, by="zip")
+# str(df.17)
+# df.17$GEOID <- as.factor(df.17$GEOID)
+# names(masterzip) <- c("GEOID", "name")
+# z <- inner_join(df.17, masterzip, by = "GEOID")
+# str(z)
+# top_zip <- z %>% arrange(desc(per)) %>% top_n(20, wt=per)
+# 
+# names(top_zip) <- c("zip", "V1",    "year",  "tech",  "info",  "prof",  "per",   "total", "name")
+# str(cor)
+# str(top_zip)
+# top_zip$zip <- as.numeric(top_zip$zip)
+# 
+# cor <- inner_join(top_zip, cor, by="zip")
 ################
-# Create the scatter plot with regression line
+# NEW
 
+# Create the scatter plot with regression line
+# 
 # p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
-#   geom_point(colour = "blue", size=4) + 
+#   geom_point(colour = "blue", size=4) +
 #   labs(title = "Fig. 8 ",
 #        x = "City Human Capital Index", y = "Median Household Income ($)") +
 #   scale_x_continuous(limits = c(85, 175)) +
@@ -854,40 +886,35 @@ cor <- inner_join(top_zip, cor, by="zip")
 #               se=FALSE)    # Don't add shaded confidence region
 # p7
 
-# NEW
-p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
-  geom_point(colour = "red")
-p1
-p2 <- p1 +
-  geom_smooth(mapping = aes(linetype = "r2"),
-              method = "lm",
-              formula = y ~ x , se = FALSE,
-              color = "black")
-p2 + geom_point()
-p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
-p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
-p3
-# Labels overlap - use ggrepel
-# install.packages("ggrepel") 
-library("ggrepel") # Repel overlapping text labels away from each other.
-p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
-p4
+# p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
+#   geom_point(colour = "red")
+# p1
+# p2 <- p1 +
+#   geom_smooth(mapping = aes(linetype = "r2"),
+#               method = "lm",
+#               formula = y ~ x , se = FALSE,
+#               color = "black")
+# p2 + geom_point()
+# p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
+# p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
+# p3
+# # Labels overlap - use ggrepel
+# # install.packages("ggrepel") 
+# library("ggrepel") # Repel overlapping text labels away from each other.
+# p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
+# p4
+
+
 
 # Adds Title / Lables
-p5 = p4+
-scale_x_continuous(name = "Capital Human City Index")+
-scale_y_continuous(name = "Log Income, 2016") +
-ggtitle("CHCI and Median Income Per Zip Code")
-p5
-
-summary(cor)
+# p5 = p4+
+# scale_x_continuous(name = "Capital Human City Index")+
+# scale_y_continuous(name = "Log Income, 2016") +
+# ggtitle("CHCI and Median Income Per Zip Code")
+# p5
+# 
+# summary(cor)
 # chci media 163
-
-
-
-
-
-
 
 ################
 # str(df.17)
@@ -919,20 +946,18 @@ summary(cor)
 #             color = "gray20", data = filter(cpigdp, Country %in% country.label))
 ```
 
-Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018, World Bank Population Data 2016, Q11 - Current country of residence [19-21]
+
 
 ```{r print table, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
- knitr::kable(head(cor))
+ # knitr::kable(head(cor))
 
 ```
 
 
 # Conclusions
 
-* Gender imbalance continues (Fig. 1)
-* BRICS to outnumber Western countries by 2020 (Fig. 6)
-* User prevalence moderatedly-correlated with innovation (Fig. 8)
+* coming soon ...
 
 
 
@@ -942,68 +967,20 @@ Source - 5-year American Community Survey 2012-2016 Global Innovation Index 2018
 
 1. [1] **Assumptions** Tech industry employment was calculated using the following: (1) Information jobs (NAICS: 51), and (2) Professional, Scientific, & Technical Skills (NAICS: 54). Data source: Quarterly Census of Employment and Wages (QCEW) developed through a cooperative program between the states and the U.S. Bureau of Labor Statistics.-- These data are summarized by Industry Sector (2-digit NAICS).
 2. [2] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+3. [3] Dowload shape files for county from LA Data Portal https://data.lacity.org/ Los Angeles Open Data
+4. [4] https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
+5. [5] ACS
 
-Shape Files - https://data.lacity.org/ Los Angeles Open Data
-ACS
- 
-
-23. [23] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
+x. [x] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
 
 
 
 # Acknowledgements
+
 - This project was largely inspired by conversations with Dr. William Yu, UCLA 
 - Dynamic Visualizations were inspire by <a href="https://www.google.com/publicdata/directory">Google Public Data Explorer</a>.
-- Fig. 3 and 5 was largely inspired by conversations with Ferran Pujol of McKinsey &Co. Chile. 
-- Fig. 6 inspired by the charts of @ash316 [15]
-- Fig. 1,2,3 inspired by the charts of @paultimothymooney [4]
-- <a href="https://twitter.com/hadleywickham">Hadley Wickham</a>, for his development of <a href="https://en.wikipedia.org/wiki/Hadley_Wickham">ggplot2
-</a> (Fig 7, 8), the open-source statistical analysis & data visualisation based on Leland Wilkinson's book Grammar of Graphics. 
-
-https://flowingdata.com/
-
-https://geocompr.robinlovelace.net/index.html
 
 
-<a href="https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting">#googleWalkout</a> [2] and is bad business - says Forbes [3]. In Fig. 1 (above), we use superhero-themes #batman #wonderwoman to visualize the heavy topic of #gender_equality in #datascience. See a bar chart for a more accurate breakdown [4]. Source: survey question Q1 - What is your gender? Sample size =  23,859 respondents 
-
-
-2. [2] https://www.theverge.com/2018/11/2/18057716/google-walkout-20-thousand-employees-ceo-sundar-pichai-meeting
-3. [3] https://www.forbes.com/sites/womensmedia/2017/08/03/breaking-down-the-gender-gap-in-data-science/#129d1bb74287
-4. [4] https://www.kaggle.com/paultimothymooney/2018-kaggle-machine-learning-data-science-survey
-5. [5] https://en.wikipedia.org/wiki/Generations_in_the_workforce
-6. [6] Sinton, E (2011). 'Baby boomers are very privileged human beings' https://www.telegraph.co.uk/finance/personalfinance/pensions/8840963/Baby-boomers-are-very-privileged-human-beings.html retrieved October 23, 2013 from www.telegraph.co.uk
-7. [7] Ken Blanchard Companies. (2009). Next Generation of workers. http://www.kenblanchard.com/img/pub/Blanchard_Next_Generation_of_Workers.pdf Retrieved October 14, 2013, from kenblanchard.com
-8. [8] Adecco Group UK and Ireland. (n.d.). Managing the modern workforce. http://www.adeccogroupuk.co.uk/SiteCollectionDocuments/Adecco-Group-Workplace-Revolution.pdf Retrieved October 13, 2013, from www.Adeccouk.co.uk
-9. ref. needed
-10. [10] https://en.wikipedia.org/wiki/Affluence_in_the_United_States
-11. [11] https://www.epi.org/blog/top-1-0-percent-reaches-highest-wages-ever-up-157-percent-since-1979/
-12. [12] J. Berengueres, Sketch thinking. 2016
-13. [13] https://en.wikipedia.org/wiki/Marimekko#Marimekko_chart
-14. [14] ref. needed
-15. [15] https://www.kaggle.com/ash316/kaggle-journey-2017-2018
-16. [16] https://en.wikipedia.org/wiki/BRICS
-17. [17] https://www.kaggle.com/harriken/brics-growth
-18. [18] See primary vs. secondary color in https://material.io/design/color/the-color-system.html#color-theme-creation
-19. [19] Dutta, S., Reynoso, R.E., Garanasvili, A., Saxena, K., Lanvin, B., Wunsch-Vincent, S., Le?n, L.R. and Guadagno, F., 2018. THE GLOBAL INNOVATION INDEX 2018: ENERGIZING THE WORLD WITH INNOVATION. GLOBAL INNOVATION INDEX 2018, p.1.
-20. [20] CSV file global innovation in https://www.globalinnovationindex.org/analysis-indicator
-21. [21] World Bank, https://data.worldbank.org/indicator/SP.POP.TOTL
-22. [22] https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
-
-
-<!-- # Leaflet for R -->
-<!-- # https://rstudio.github.io/leaflet/ -->
-
-<!-- # SF -->
-<!-- # Tidy spatial data in R: using dplyr, tidyr, and ggplot2 with sf -->
-<!-- # http://strimas.com/r/tidy-sf/ -->
-
-
- The shapefile format is a common way to store data for geographic areas, namely polygons, lines,
- and points. Each tract is represented as a polygon (i.e. some shape) 
-
-Dowload shape files for county from LA Data Portal
-https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
 
 ```{r Tree Map, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -1077,4 +1054,24 @@ https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
 
 
 ```
+
+
+
+
+```{r}
+# install.packages("kableExtra")
+# 
+# library(kableExtra)
+# 
+# kable(df.17)
+# 
+# # The code below will automatically include the image in the rmarkdown document
+# kable(dt, "latex", booktabs = T) %>%
+# column_spec(1, bold = T) %>%
+# kable_as_image()
+
+
+
+```
+
 
