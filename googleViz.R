@@ -1,7 +1,7 @@
 #####################################################################################################
 # Capstone Project          Instructor: William Yu
 # By Joao de Paula, UCLA Extension Data Science Intensive
-# December. 2018
+# November. 2018
 #####################################################################################################
 
 #####################################################################################################
@@ -51,39 +51,33 @@ print(J, "chart")
 #
 #####################################################################################################
 
-## Bubbles
-
+# 1 ## Bubbles
 # Tech Jobs x Time
 # Color = Percentage
 # Size = Tech Jobs
 # Select = ALL + Trails
+#-- shows drop after 2007 recession
+#-- shows 2014 LA best tech % 10.34
 
-# Growth x Time
+# 2 ## Bubbles
+# Per_Tech x Time
+# Color = Percentage
+# Size = Tech Jobs
+# Select = ALL + Trails
+# --- shows % fluctuates between 9/10% 
+
+# 3 ## Bubbles
+# Time x Growth
 # Color = Percentage
 # Size = Tech Jobs
 # Select = ALL + Trails
 
-# Time x Time
-# Color = Percentage
-# Size = Tech Jobs
-# Select = ALL + Trails
 
-# Time x Tech Jobs
-# Color = Percentage
-# Size = Tech Jobs
-# Select = ALL + Trails
-
-## Bar Charts
-
-# Growth x Growth
-
+#4 ## Bar Charts
 # Tech Jobs x Tech Jobs
 
-## Line Charts
-
-# Tech Jobs , color = percentage
-# ALL Jobs , color = percentage
-# Growth , color = percentage
+##5 Line Charts
+# Tech Jobs x Tech Jobs
 
 
 
