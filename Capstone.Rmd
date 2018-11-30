@@ -505,7 +505,7 @@ Los Angeles County, CA has a population of 10.1M people, with a median age of 36
 
 # Should You Become a Data Scientist? 
 <br>
-There are tons of jobs, high Salary and much growth. IBM  Predicts Demand For Data Scientists Will Soar 28%   By 2020. [3]. Let’s check the facts:
+There are many jobs, high Salary and much growth. IBM  Predicts Demand For Data Scientists Will Soar 28%   By 2020. [3]. Let’s check the facts:
 
 # Employment Projections 
 
@@ -870,7 +870,7 @@ p5
 
 ```
 
-Association between the 2012 CHCI [9] and the 2016 median household income [10] of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
+Association between the 2012 CHCI [9] and the 2016 median household income [10] of 282 zip codes in L.A. County. We can see a **very strong correlation** between the human capital level [23] and the household income. It demonstrates the importance to invest in education (CHCI) in order to create a more productive workforce with high-paying jobs.
 
 ```{r}
 
@@ -976,7 +976,7 @@ Association between the 2012 CHCI [9] and the 2016 median household income [10] 
 
 # Conclusions
 
-* This research shows that Data Science is a promissing field with tons of jobs, high salary and great growth. 
+* This research shows that Data Science is a promissing field with abundant job opportunities, high salaries and great growth. 
 
 How to Become a Data Scientist in 8 Easy Steps [11]
 
