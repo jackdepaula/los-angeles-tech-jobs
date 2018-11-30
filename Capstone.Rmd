@@ -811,7 +811,7 @@ m
 ```
 
 
-# Correlation Between the Education and Income
+# Correlation Between Education and Income
 <br>
 
 ```{r correlation, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
@@ -996,7 +996,7 @@ How to Become a Data Scientist in 8 Easy Steps [11]
 
 1.  [1] PHOTO BY TYLER MERBLER - https://www.flickr.com/photos/37527185@N05/13934368189/
 2.  [2] PHOTO BY PAOLO GAMBA - https://www.flickr.com/photos/abukij/18012989253/
-3.  [3] IBM  Predicts Demand For Data Scientists- https://www.forbes.com/sites/unicefusa/2018/11/20/a-day-to-celebrate-defend-and-promote-child-rights/#74c6ac42e4d4
+3.  [3] IBM  Predicts Demand For Data Scientists- https://www.forbes.com/sites/louiscolumbus/2017/05/13/ibm-predicts-demand-for-data-scientists-will-soar-28-by-2020/#6d337fec7e3b
 4.  [4] Employment Projections - Data from the Bureau of Labor Statistics - https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
 5.  [5] Tech industry employment was calculated using the following: (1) Information jobs (NAICS: 51), and (2) Professional, Scientific, & Technical Skills (NAICS: 54). Data source: Quarterly Census of Employment and Wages (QCEW) developed through a cooperative program between the states and the U.S. Bureau of Labor Statistics. These data are summarized by Industry Sector (2-digit NAICS).
 6.  [6] Dowloaded shape files for zip code boundaries from the County Data Portal https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
@@ -1104,7 +1104,12 @@ How to Become a Data Scientist in 8 Easy Steps [11]
 # column_spec(1, bold = T) %>%
 # kable_as_image()
 
-
+rm(m)
+rm(zips.shp)
+rm(income)
+rm(lacountytech)
+rm(lacounty_data)
+rm(popup)
 
 ```
 
