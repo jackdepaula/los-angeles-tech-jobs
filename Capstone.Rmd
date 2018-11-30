@@ -490,9 +490,9 @@ rm(laz17tech)
 
 <br>
 <center><img  src="./images/city.jpg"></center><br>
-<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER</a>
+<center><a href="https://www.flickr.com/photos/37527185@N05/13934368189/">PHOTO BY TYLER MERBLER [1]</a>
 <br>
-Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 and a median household income of $54,432. 
+Los Angeles, CA has a population of 3.98M people with a median age of 35.6, a median household income of $54,432.<br> 1,741,311 total jobs with **179,755 tech jobs - 9.7% of total jobs**
 
 # County
 
@@ -500,13 +500,14 @@ Los Angeles, CA has a population of **3.98M** people with a median age of 35.6 a
 <center><img  src="./images/county.jpg"></center><br>
 <center><a href="https://www.flickr.com/photos/abukij/18012989253/">PHOTO BY PAOLO GAMBA</a> 
 <br>
-Los Angeles County, CA has a population of **10.1M people** with a median age of 36.3 and a median household income of $61,338. <center>
-
-<br>
-Let's take a look at the tech industry employment numbers for the past 13 years.
+Los Angeles County, CA has a population of 10.1M people, with a median age of 36.3, a median household income of $61,338.<br>4,550,399 total jobs with **491,128 tech jobs - 9.3% of total jobs**
 <br>
 
-# Employment Projections
+# Should You Become a Data Scientist? 
+<br>
+There are tons of jobs, high Salary and much growth. IBM  Predicts Demand For Data Scientists Will Soar 28%   By 2020. [3]. Let’s check the facts:
+
+# Employment Projections 
 
 ```{r Bureau Labor Statistics, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -549,6 +550,7 @@ occupation$compu <- (occupation$industry == "Computer & Mathematical")
 
 ```
 
+
 ```{r Median Wages by Industry in 2017}
 # add geom_hline showing "Total media wages"
 # # Change the "horizontal justification" to be left-justified with hjust 
@@ -564,6 +566,10 @@ ggplot(data=occupation, mapping=aes(x=industry, y=median_wages17, fill=compu)) +
   geom_text(aes(label = median_wages17), color = "black", hjust=-0.1) +
   geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
 ```
+<br>
+The median annual wage for computer and information technology occupations was $84,580 in May 2017, which was more than double the median annual wage for all occupations of $37,690.[4]
+<br>
+
 
 ```{r Number of jobs change projected for 2026}
 # remove all occupations
@@ -582,6 +588,11 @@ ggplot(data=occupation, mapping=aes(x=industry, y=change2026, fill=compu)) +
   # geom_hline(yintercept = 37690, color="red", size=1, linetype="dashed")
 ```
 
+<br>
+Employment of computer and information technology occupations 
+is projected to grow 13 percent from 2016 to 2026 in the US, ***faster than the average for all occupations.*** 
+<br>
+
 ```{r Percentage Growth Change 2026}
 occupation$industry <- fct_reorder(occupation$industry, occupation$perchange206, mean, na.rm=TRUE)
 
@@ -597,21 +608,19 @@ ggplot(data=occupation, mapping=aes(x=industry, y=perchange206, fill=compu)) +
 rm(mycols)
 ```
 
-2017 Employment by major occupational group, 2016 and projected 2026 (Numbers in thousands) [1]. 
-Tech employees are compensated nicely due to this tech boom. For example, in 207 while the annual medialn wage for all occupations was $37,000 in the U.S., it was $84,600 for the computer occupations, second only to $102,000 of the management occupations as shown in Table 1.
+<br>
+These occupations are projected to add about 607k new jobs. 
 <br>
 
-
-
-# Dinamic Visualizations
+# Dinamic Visualizations 
 
 <!-- Run googleViz.R -->
 <br>
 <center><img  src="./images/gviz1-COLLAGE.jpg"></center>
-<center>Total jobs in the city of Los Angeles and County<center>
+<center>Tech employment data for Los Angeles city and county from 2005 to 2017.[5] <center>
 
 
-# Maps
+# Dot Density Map 
 
 <!-- <center><img  src="./images/tmap.png"></center><br> -->
 
@@ -720,11 +729,14 @@ rm(cnty.zips)
 rm(cnty.zips.17)
 
 ```
-**2017 Dot density zip code map**<br>
+Shows a high density of tech jobs in 
+West LA, West Hollywood, Burbank, Westlake and Pasadena areas in 2017   [6] [7] [8] 
+<br>
 Each dot = 10 tech jobs
 <br>
 
 ```{r Gif Animation}
+
 # install imageMagick
 # https://www.imagemagick.org/script/download.php#windows
 
@@ -744,6 +756,8 @@ Each dot = 10 tech jobs
 #   image_write("tech_100.gif") # write to current dir
 ```
 
+# Interactive Zip Code Map 
+<br>
 
 ```{r Leaflet,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -768,8 +782,6 @@ m <- leaflet(data = zips.shp) %>%
   addProviderTiles("CartoDB.Positron") %>%
   addResetMapButton() %>%
   addSearchOSM() %>%
-  addSearchGoogle() %>%
-  addSearchUSCensusBureau() %>% 
   addPolygons(fillColor = ~pal(df.17$per), 
               fillOpacity = 0.8, 
               color = "#BDBDC3", 
@@ -799,33 +811,8 @@ m
 ```
 
 
-
-<!-- <center><img  src="./images/tech_10.gif"></center><br> -->
-<!-- <br> -->
-<!-- Figure 2 shows the evolution of Tech Jobs by zip code from 2012 to 2017 -->
-<!-- <br> -->
-
-
-```{r tmap,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-
-# # Using zips shape file (LA County)
-# map <- tm_shape(zips.shp) +
-#   tm_polygons()
-# tmap_mode('view')
-# map <- tmap_leaflet(map)
-# map %>% 
-#   setView(lng = -118.2437, lat = 34.0522, zoom = 9) %>% 
-#   addProviderTiles("CartoDB.Positron")
-
-```
-
-```{r shiny app,  include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-
-```
-
-# Correlation Between the CHCI and the Median House Income of Los Angeles County Zip Codes
+# Correlation Between the Education and Income
 <br>
-Fig. 8 shows the association between the 2012 CHCI and the 2016 median household income of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
 
 ```{r correlation, include=FALSE, message=FALSE, echo=FALSE, warning=FALSE}
 
@@ -883,7 +870,7 @@ p5
 
 ```
 
-
+Association between the 2012 CHCI [9] and the 2016 median household income [10] of 282 zip codes in L.A. County. We can see a **very strong correlation** correlation between the human capital level [23] and the household income for the zip code in L.A. It demonstrates the importance to invest in education (chci) in order to create more productive workforce and more high paying jobs.
 
 ```{r}
 
@@ -989,27 +976,42 @@ p5
 
 # Conclusions
 
-* coming soon ...
+* This research shows that Data Science is a promissing field with tons of jobs, high salary and great growth. 
+
+How to Become a Data Scientist in 8 Easy Steps [11]
+
+1. Get good at stats, math and machine learning
+2. Learn to code
+3. Understand databases
+4. Master data munging, visualization and reporting
+5. Level up with Big Data
+6. Experience, practice and meet fellow data scientists
+7. Internship, bootcamp or get a job
+8. Follow and engage with the community
 
 
 
 
 # References
 
+1.  [1] PHOTO BY TYLER MERBLER - https://www.flickr.com/photos/37527185@N05/13934368189/
+2.  [2] PHOTO BY PAOLO GAMBA - https://www.flickr.com/photos/abukij/18012989253/
+3.  [3] IBM  Predicts Demand For Data Scientists- https://www.forbes.com/sites/unicefusa/2018/11/20/a-day-to-celebrate-defend-and-promote-child-rights/#74c6ac42e4d4
+4.  [4] Employment Projections - Data from the Bureau of Labor Statistics - https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
+5.  [5] Tech industry employment was calculated using the following: (1) Information jobs (NAICS: 51), and (2) Professional, Scientific, & Technical Skills (NAICS: 54). Data source: Quarterly Census of Employment and Wages (QCEW) developed through a cooperative program between the states and the U.S. Bureau of Labor Statistics. These data are summarized by Industry Sector (2-digit NAICS).
+6.  [6] Dowloaded shape files for zip code boundaries from the County Data Portal https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
+7.  [7] Downloaded Zip Code List from - http://file.lacounty.gov/SDSInter/lac/1031552_MasterZipCodes.pdf
+8.  [8] Inspired by How to Make Dot Density Maps in R - Nathan Yau - https://flowingdata.com/2014/08/28/how-to-make-dot-density-maps-in-r/
+9.  [9] City Human Capital Index - http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
+10. [10] Median income by zip code data from the American Community Survey obtained using the tidycensus R package. Request API at https://api.census.gov/data/key_signup.html
+11. [11] How to become a data scientist in 8 easy steps. - https://insidebigdata.com/2014/11/14/become-data-scientist-8-easy-steps/
 
-1. [1] **Assumptions** Tech industry employment was calculated using the following: (1) Information jobs (NAICS: 51), and (2) Professional, Scientific, & Technical Skills (NAICS: 54). Data source: Quarterly Census of Employment and Wages (QCEW) developed through a cooperative program between the states and the U.S. Bureau of Labor Statistics.-- These data are summarized by Industry Sector (2-digit NAICS).
-2. [2] https://www.bls.gov/emp/tables/emp-by-major-occupational-group.htm
-3. [3] Dowload shape files for county from LA Data Portal https://data.lacity.org/ Los Angeles Open Data
-4. [4] https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f
-5. [5] ACS
-
-x. [x] http://www.anderson.ucla.edu/centers/ucla-anderson-forecast/projects-and-partnerships/city-human-capital-index
 
 
 
 # Acknowledgements
 
-- This project was largely inspired by conversations with Dr. William Yu, UCLA 
+- This project was largely inspired by conversations with  professor ***William Yu, economist at UCLA ANDERSON FORECAST *** <a ref="https://www.anderson.ucla.edu/centers/ucla-anderson-forecast/about-us/william-yu">
 - Dynamic Visualizations were inspire by <a href="https://www.google.com/publicdata/directory">Google Public Data Explorer</a>.
 
 
