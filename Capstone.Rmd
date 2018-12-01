@@ -737,6 +737,8 @@ Each dot = 10 tech jobs
 
 ```{r Gif Animation}
 
+# creates gif animation from several png files
+
 # install imageMagick
 # https://www.imagemagick.org/script/download.php#windows
 
@@ -791,22 +793,6 @@ m
 
 # List of map providers
 # https://leaflet-extras.github.io/leaflet-providers/preview/
-
-# providers$Esri.WorldStreetMap 
-# m1 <- leaflet(data = zips.shp) %>%
-#   addProviderTiles(providers$Esri.WorldStreetMap) %>%
-#   addResetMapButton() %>%
-#   addSearchOSM() %>%
-#   addSearchGoogle() %>%
-#   addSearchUSCensusBureau() %>% 
-#   addPolygons(fillColor = ~pal(df.17$per), 
-#               fillOpacity = 0.8, 
-#               color = "#BDBDC3", 
-#               weight = 1,
-#               popup = popup)
-# m1
-
-
 
 ```
 
@@ -872,108 +858,6 @@ p5
 
 Association between the 2012 CHCI [9] and the 2016 median household income [10] of 282 zip codes in L.A. County. We can see a **very strong correlation** between the human capital level [23] and the household income. It demonstrates the importance to invest in education (CHCI) in order to create a more productive workforce with high-paying jobs.
 
-```{r}
-
-################
-
-## Need to clean code bellow
-
-# str(df.17)
-# df.17$GEOID <- as.factor(df.17$GEOID)
-# names(masterzip) <- c("GEOID", "name")
-# z <- inner_join(df.17, masterzip, by = "GEOID")
-# str(z)
-# top_zip <- z %>% arrange(desc(per)) %>% top_n(20, wt=per)
-# 
-# names(top_zip) <- c("zip", "V1",    "year",  "tech",  "info",  "prof",  "per",   "total", "name")
-# str(cor)
-# str(top_zip)
-# top_zip$zip <- as.numeric(top_zip$zip)
-# 
-# cor <- inner_join(top_zip, cor, by="zip")
-################
-# NEW
-
-# Create the scatter plot with regression line
-# 
-# p7 <- ggplot(cor, aes(x=chci, y=estimate)) +
-#   geom_point(colour = "blue", size=4) +
-#   labs(title = "Fig. 8 ",
-#        x = "City Human Capital Index", y = "Median Household Income ($)") +
-#   scale_x_continuous(limits = c(85, 175)) +
-#     geom_smooth(colour = "red", method=lm,   # Add linear regression line
-#               se=FALSE)    # Don't add shaded confidence region
-# p7
-
-# p1 <- ggplot(cor, aes(x=chci, y=log(estimate)))+
-#   geom_point(colour = "red")
-# p1
-# p2 <- p1 +
-#   geom_smooth(mapping = aes(linetype = "r2"),
-#               method = "lm",
-#               formula = y ~ x , se = FALSE,
-#               color = "black")
-# p2 + geom_point()
-# p2 + geom_point(shape = 1, size = 2) # Changes to shape = 1
-# p3=p2 + geom_point(shape = 1, size = 3, stroke=1.5)
-# p3
-# # Labels overlap - use ggrepel
-# # install.packages("ggrepel") 
-# library("ggrepel") # Repel overlapping text labels away from each other.
-# p4 <- p3 + geom_text_repel(aes(label = zip), size=2) # Uses greppel text repel
-# p4
-
-
-
-# Adds Title / Lables
-# p5 = p4+
-# scale_x_continuous(name = "Capital Human City Index")+
-# scale_y_continuous(name = "Log Income, 2016") +
-# ggtitle("CHCI and Median Income Per Zip Code")
-# p5
-# 
-# summary(cor)
-# chci media 163
-
-################
-# str(df.17)
-# df.17$GEOID <- as.factor(df.17$GEOID)
-# names(masterzip) <- c("GEOID", "name")
-# z <- inner_join(df.17, masterzip, by = "GEOID")
-# str(z)
-# top_zip <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
-# str(cor)
-# str(top_zip)
-
-
-# # Creates vector with list of top tech zip codes
-# top_zip$GEOID -> zip.label
-# 
-# # Only shows labels from list created
-# 
-# library(ggplot2)
-# library(readxl) 
-# library(tidyverse) # Includes ggplot2
-# library(dplyr)
-# 
-# p6 = p5 + geom_text(aes(label = zip),
-#             color = "gray20", data = filter(cor, cor$zip %in% zip.label))
-# p6
-# 
-# 
-# p4 = p3 + geom_text(aes(label = Country),
-#             color = "gray20", data = filter(cpigdp, Country %in% country.label))
-```
-
-
-
-```{r print table, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-
- # knitr::kable(head(cor))
-
-```
-
-
 # Conclusions
 
 * This research shows that Data Science is a promissing field with abundant job opportunities, high salaries and great growth. 
@@ -988,9 +872,6 @@ How to Become a Data Scientist in 8 Easy Steps [11]
 6. Experience, practice and meet fellow data scientists
 7. Internship, bootcamp or get a job
 8. Follow and engage with the community
-
-
-
 
 # References
 
@@ -1016,93 +897,7 @@ How to Become a Data Scientist in 8 Easy Steps [11]
 
 
 
-```{r Tree Map, include=TRUE, message=FALSE, echo=FALSE, warning=FALSE}
-
-# install.packages("portfolio")
-# library(portfolio)
-# 
-# # install.packages("treemap")
-# library(treemap)
-
-# df.17$GEOID <- as.factor(df.17$GEOID)
-# names(masterzip) <- c("GEOID", "name")
-# z <- inner_join(df.17, masterzip, by = "GEOID")
-# str(z)
-
-
-# t <- z %>% arrange(desc(per)) %>% top_n(30, wt=per)
-# 
-# # make a tree map
-# treemap(dtf = t,
-#         index=c("name"),
-#         vSize="per",
-#         vColor="tech",
-#         palette="Blues",
-#         type="value",
-#         border.col=c("grey70", "grey90"),
-#         fontsize.title = 18,
-#         algorithm="pivotSize",
-#         title ="Treemap of the top 15 NZ's most populous cities",
-#         title.legend="Population density (people/km^2)")
-
-
-
-
-
-# y <- z[order(-z$per),]
-# y <- z[1:20,]
-# y$name <- c("Universal City","Glenoaks","Burbank 1","Playa Vista","Santa Monica","Burbank 2","Century City", "Cheviot Hills (City of LA)/Rancho Park", "Edwards AFB","Venice","Culver City","Hollywood","ARCO Towers (City of LA)","Mar Vista","Encino") 
-# map.market(id=y$GEOID, area=y$per, group=y$name, color=y$per, main="Percentage")
-
-
-# map.market(id=z$GEOID, area=z$per, group=z$name, color=z$per, main="Professional")
-
-## Heat Map
-
-
-# t <- z %>% arrange(desc(per)) %>% top_n(10, wt=per)
-# row.names(t) <- t$GEOID
-# 
-# # leaders <- z[order(z$per),]
-# # row.names(t) <- t$x
-# # row.names(z) <- z$name
-# t <- t[,5:9]
-# # names(t) <- c("Information", "Professional", "Tech Density")
-# # leaders <- leaders[,2:9]
-# tech_matrix <- data.matrix(t)
-# 
-# 
-# my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
-# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = cm.colors(256), scale="column", margins=c(5,10))
-# 
-# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, scale="column", margins=c(5,10))
-# 
-# col_breaks = c(seq(-1,0,length=100),  # for red
-#   seq(0.10,30,length=100),           # for yellow
-#   seq(0.81,1,length=100))             # for green
-# heatmap(tech_matrix, Rowv=NA, Colv=NA, col = my_palette, breaks=col_breaks, scale="column",dendrogram="row", margins=c(5,10))
-
-
-
-
-
-
-```
-
-
-
-
 ```{r}
-# install.packages("kableExtra")
-# 
-# library(kableExtra)
-# 
-# kable(df.17)
-# 
-# # The code below will automatically include the image in the rmarkdown document
-# kable(dt, "latex", booktabs = T) %>%
-# column_spec(1, bold = T) %>%
-# kable_as_image()
 
 rm(m)
 rm(zips.shp)
